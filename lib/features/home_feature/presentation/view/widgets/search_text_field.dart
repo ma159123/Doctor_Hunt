@@ -58,8 +58,8 @@ class SearchTextField extends StatelessWidget {
             decoration: InputDecoration(
               fillColor: ColorManager.white,
               filled: true,
-              prefixIcon: prefixIcon,
-              suffixIcon: suffixIcon,
+              prefixIcon: prefixIcon?? Icon(Icons.search,color: ColorManager.grey,size: 25,),
+              suffixIcon: suffixIcon??Icon(Icons.close,color: ColorManager.grey,size: 25,),
               isDense: true,
               hintText: hintText,
               hintStyle: TextStyles.titleStyle16.copyWith(

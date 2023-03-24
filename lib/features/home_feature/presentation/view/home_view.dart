@@ -1,3 +1,4 @@
+import 'package:doctor_hunt/core/utils/app_routes.dart';
 import 'package:doctor_hunt/core/utils/color_manager.dart';
 import 'package:doctor_hunt/core/utils/text_styles.dart';
 import 'package:doctor_hunt/features/home_feature/presentation/view/widgets/feature_doctors_list.dart';
@@ -5,6 +6,7 @@ import 'package:doctor_hunt/features/home_feature/presentation/view/widgets/medi
 import 'package:doctor_hunt/features/home_feature/presentation/view/widgets/popular_doctors_list.dart';
 import 'package:doctor_hunt/features/home_feature/presentation/view/widgets/search_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 
 class HomeView extends StatelessWidget {
@@ -68,13 +70,16 @@ class HomeView extends StatelessWidget {
                   ),
                   Padding(
                     padding:  EdgeInsets.only(top: 16.0.h),
-                    child: SearchTextField(
-                        textEditingController: searchController,
-                        hintText: 'Search..... ',
-                        validation: (val){},
-                      prefixIcon: Icon(Icons.search,color: ColorManager.grey,size: 25,),
-                      suffixIcon: Icon(Icons.close,color: ColorManager.grey,size: 25,),
-                        ),
+                    child: GestureDetector(
+                      onTap: (){
+                        GoRouter.of(context).push(AppRoutes.searchViewRoute);
+                      },
+                      child: SearchTextField(
+                          textEditingController: searchController,
+                          hintText: 'Search..... ',
+                          validation: (val){},
+                          ),
+                    ),
                   ),
                 ],
               ),

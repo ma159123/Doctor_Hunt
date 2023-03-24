@@ -20,7 +20,7 @@ class CustomButton extends StatelessWidget {
     this.width,
     this.height,
     this.fontSize,
-    this.radius=15,
+    this.radius=10,
     required this.textColor,
      this.color,
     this.fontWeight,
@@ -42,7 +42,7 @@ class CustomButton extends StatelessWidget {
           width: width??  85.w,
           height: height??8.h,
           child: Center(
-              child: Text(buttonText,style:TextStyles.titleStyle18.copyWith(color: textColor,),
+              child: Text(buttonText,style:TextStyles.titleStyle18.copyWith(color: textColor,fontSize: fontSize??18),
               )
           ),
         ),

@@ -1,6 +1,7 @@
 import 'package:doctor_hunt/features/auth_feature/presentation/views/login_view.dart';
 import 'package:doctor_hunt/features/auth_feature/presentation/views/register_view.dart';
 import 'package:doctor_hunt/features/home_feature/presentation/view/layout.dart';
+import 'package:doctor_hunt/features/home_feature/presentation/view/search_view.dart';
 import 'package:doctor_hunt/features/on_boarding/on_boarding_view.dart';
 import 'package:flutter/cupertino.dart';
 import '../../features/home_feature/presentation/view/home_view.dart';
@@ -52,6 +53,12 @@ abstract class AppRoutes {
         path: homeViewRoute,
         builder: (BuildContext context, GoRouterState state) {
           return const HomeView();
+        },
+      ),
+      GoRoute(
+        path: searchViewRoute,
+        builder: (BuildContext context, GoRouterState state) {
+          return const SearchView();
         },
       ),
       // GoRoute(
