@@ -4,15 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({Key? key}) : super(key: key);
+  const CustomAppBar({Key? key, required this.title,required this.onTap}) : super(key: key);
 
+  final String title;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding:  EdgeInsets.only(left: 5.0.w),
-      child: Row(
-        children: [
-          Container(
+    return Row(
+      children: [
+        GestureDetector(
+      onTap:onTap,
+          child: Container(
             height: 5.h,
             width: 10.w,
             decoration: BoxDecoration(
@@ -22,10 +24,10 @@ class CustomAppBar extends StatelessWidget {
             ),
             child:  Center(child: Icon(Icons.arrow_back_ios_new_rounded,color:ColorManager.grey ,)),
           ),
-          SizedBox(width: 5.w,),
-          Text('Find Doctors',style: TextStyles.titleStyle18.copyWith(fontWeight: FontWeight.w400),)
-        ],
-      ),
+        ),
+        SizedBox(width: 5.w,),
+        Text(title,style: TextStyles.titleStyle18.copyWith(fontWeight: FontWeight.w400),)
+      ],
     );
   }
 }

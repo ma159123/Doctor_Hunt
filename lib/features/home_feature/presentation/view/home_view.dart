@@ -72,12 +72,16 @@ class HomeView extends StatelessWidget {
                     padding:  EdgeInsets.only(top: 16.0.h),
                     child: GestureDetector(
                       onTap: (){
-                        GoRouter.of(context).push(AppRoutes.searchViewRoute);
+
                       },
                       child: SearchTextField(
                           textEditingController: searchController,
                           hintText: 'Search..... ',
                           validation: (val){},
+                        onTap: (){
+                          print('object');
+                          GoRouter.of(context).push(AppRoutes.searchViewRoute);
+                        }, isReadOnly: true,
                           ),
                     ),
                   ),
@@ -92,17 +96,25 @@ class HomeView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text('Popular Doctor',style: TextStyles.titleStyle18,),
-                    Row(
-                      children: [
-                        Text('see all',style: TextStyles.titleStyle14.copyWith(color: ColorManager.lightGrey),),
-                        Icon(Icons.arrow_forward_ios,color: ColorManager.lightGrey,size: 15,)
-                      ],
+                    GestureDetector(
+                      onTap: (){
+                        GoRouter.of(context).push(AppRoutes.popularDoctorsViewRoute);
+                      },
+                      child: Row(
+                        children: [
+                          Text('see all',style: TextStyles.titleStyle14.copyWith(color: ColorManager.lightGrey),),
+                          Icon(Icons.arrow_forward_ios,color: ColorManager.lightGrey,size: 15,)
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
               SizedBox(height: 2.h,),
-              const PopularDoctorsList(),
+              Padding(
+                padding:  EdgeInsets.only(left: 5.0.w),
+                child: const PopularDoctorsList(),
+              ),
               SizedBox(height: 3.h,),
               Padding(
                 padding:  EdgeInsets.symmetric(horizontal: 5.0.w),

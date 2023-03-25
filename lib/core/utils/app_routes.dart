@@ -5,6 +5,7 @@ import 'package:doctor_hunt/features/home_feature/presentation/view/search_view.
 import 'package:doctor_hunt/features/on_boarding/on_boarding_view.dart';
 import 'package:flutter/cupertino.dart';
 import '../../features/home_feature/presentation/view/home_view.dart';
+import '../../features/home_feature/presentation/view/popular_doctors_view.dart';
 import '../../features/splash/splash_view.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,6 +17,7 @@ abstract class AppRoutes {
   static String loginViewRoute = '/loginView';
   static String registerViewRoute = '/registerView';
   static String onBoardingViewRoute='/onBoardingView';
+  static String popularDoctorsViewRoute='/popularDoctorsView';
 
   static final GoRouter router = GoRouter(
     routes: <RouteBase>[
@@ -59,6 +61,12 @@ abstract class AppRoutes {
         path: searchViewRoute,
         builder: (BuildContext context, GoRouterState state) {
           return const SearchView();
+        },
+      ),
+      GoRoute(
+        path: popularDoctorsViewRoute,
+        builder: (BuildContext context, GoRouterState state) {
+          return const PopularDoctorsView();
         },
       ),
       // GoRoute(

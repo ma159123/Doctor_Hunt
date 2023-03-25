@@ -16,12 +16,14 @@ class SearchTextField extends StatelessWidget {
   double? width;
   double? radius;
   var onTap;
+  bool isReadOnly;
   SearchTextField(
       {Key? key,
       required this.textEditingController,
       required this.hintText,
       this.isMaxLine = false,
       required this.validation,
+        required this.isReadOnly,
       this.isValidation,
       this.validationText,
       this.prefixIcon,
@@ -29,7 +31,7 @@ class SearchTextField extends StatelessWidget {
       this.radius,
       this.suffixIcon,
       this.onChange,
-      this.onTap})
+      this.onTap,})
       : super(key: key);
 
   @override
@@ -38,11 +40,12 @@ class SearchTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          padding: const EdgeInsets.all(5.0),
+          //padding: const EdgeInsets.all(5.0),
           width: width ?? 90.w,
           child: TextFormField(
             onTap: onTap ?? () {},
             autofocus: false,
+            readOnly: isReadOnly,
             cursorColor: Colors.black,
             validator: validation ?? () {},
             onChanged: onChange ?? (v) {},

@@ -28,7 +28,7 @@ class LayoutView extends StatelessWidget {
                 backgroundColor: ColorManager.white,
                 type: BottomNavigationBarType.fixed,
                 selectedItemColor: ColorManager.green,
-                unselectedItemColor: ColorManager.grey,
+                unselectedItemColor: ColorManager.lightGrey,
 
                 items:  [
                   buildBottomNavBar(icon: Icons.home, isCurrentIndex: layoutCubit.index==0),

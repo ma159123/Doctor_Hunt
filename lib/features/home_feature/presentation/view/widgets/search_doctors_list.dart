@@ -9,7 +9,6 @@ class SearchDoctorsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 22.h,
-      padding: EdgeInsets.only(left: 5.w,right: 5.w),
       child: ListView.separated(
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) => const SearchDoctorsItem(),

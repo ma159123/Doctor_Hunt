@@ -10,12 +10,6 @@ class ColorManager {
   static Color darkGreen=HexColor.fromHex('#0EBE7E');
   static Color lightGreen=HexColor.fromHex('#07D9AD');
   static Color yellow=HexColor.fromHex('#ffdd4f');
-
-
-  // new colors
-  static Color darkPrimary = HexColor.fromHex("#d17d11");
-  static Color grey1 = HexColor.fromHex("#707070");
-  static Color grey2 = HexColor.fromHex("#797979");
   static Color white = HexColor.fromHex("#FFFFFF");
   static Color error = HexColor.fromHex("#e61f34"); // red color
 }

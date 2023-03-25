@@ -8,10 +8,10 @@ class PopularDoctorsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 28.h,
-      padding: EdgeInsets.only(left: 5.w),
       child: ListView.separated(
+          shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) => const PopularDoctorsItem(),

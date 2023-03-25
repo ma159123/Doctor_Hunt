@@ -21,7 +21,7 @@ class RateWidget extends StatelessWidget {
           return  Icon(
             FontAwesomeIcons.solidStar,
             color: ColorManager.yellow,
-            size: 14,
+            size: 12,
           );
         },
         separatorBuilder: (BuildContext context, int index)=>SizedBox(width: 2.w,),
