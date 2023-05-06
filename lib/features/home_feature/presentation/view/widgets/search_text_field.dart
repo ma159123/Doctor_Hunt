@@ -8,6 +8,8 @@ class SearchTextField extends StatelessWidget {
   final String hintText;
   var validation;
   var onChange;
+  void Function()? onSearch;
+  void Function()? onClear;
   bool? isValidation;
   String? validationText;
   bool isMaxLine = false;
@@ -17,22 +19,24 @@ class SearchTextField extends StatelessWidget {
   double? radius;
   var onTap;
   bool isReadOnly;
-  SearchTextField(
-      {Key? key,
-      required this.textEditingController,
-      required this.hintText,
-      this.isMaxLine = false,
-      required this.validation,
-        required this.isReadOnly,
-      this.isValidation,
-      this.validationText,
-      this.prefixIcon,
-      this.width,
-      this.radius,
-      this.suffixIcon,
-      this.onChange,
-      this.onTap,})
-      : super(key: key);
+  SearchTextField({
+    Key? key,
+    required this.textEditingController,
+    required this.hintText,
+    this.isMaxLine = false,
+    required this.validation,
+    required this.isReadOnly,
+    this.isValidation,
+    this.validationText,
+    this.prefixIcon,
+    this.width,
+    this.radius,
+    this.suffixIcon,
+    this.onChange,
+    this.onTap,
+    this.onClear,
+    this.onSearch,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,13 +65,28 @@ class SearchTextField extends StatelessWidget {
             decoration: InputDecoration(
               fillColor: ColorManager.white,
               filled: true,
-              prefixIcon: prefixIcon?? Icon(Icons.search,color: ColorManager.grey,size: 25,),
-              suffixIcon: suffixIcon??Icon(Icons.close,color: ColorManager.grey,size: 25,),
+              prefixIcon: IconButton(
+                onPressed: onSearch,
+                icon: prefixIcon ??
+                    Icon(
+                      Icons.search,
+                      color: ColorManager.grey,
+                      size: 25,
+                    ),
+              ),
+              suffixIcon: IconButton(
+                onPressed: onClear,
+                icon: suffixIcon ??
+                    Icon(
+                      Icons.close,
+                      color: ColorManager.grey,
+                      size: 25,
+                    ),
+              ),
               isDense: true,
               hintText: hintText,
               hintStyle: TextStyles.titleStyle16.copyWith(
-                  fontWeight: FontWeight.w300,
-                  color: ColorManager.grey),
+                  fontWeight: FontWeight.w300, color: ColorManager.grey),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(radius ?? 12.0),
                 borderSide: BorderSide(

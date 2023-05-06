@@ -4,18 +4,16 @@ import 'package:sizer/sizer.dart';
 import '../utils/color_manager.dart';
 
 class LineWidget extends StatelessWidget {
-  const LineWidget({Key? key,required this.color}) : super(key: key);
-final Color color;
+  const LineWidget({Key? key, required this.color}) : super(key: key);
+  final Color color;
   @override
   Widget build(BuildContext context) {
-    return  Center(
+    return Center(
       child: Container(
         height: 0.5.h,
         width: 30.w,
         decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(15)
-        ),
+            color: color, borderRadius: BorderRadius.circular(15)),
       ),
     );
   }

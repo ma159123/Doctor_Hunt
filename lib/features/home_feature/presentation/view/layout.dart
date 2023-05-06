@@ -1,4 +1,5 @@
 import 'package:doctor_hunt/core/utils/color_manager.dart';
+import 'package:doctor_hunt/features/home_feature/data/repo/get_doctors_repo.dart';
 import 'package:doctor_hunt/features/home_feature/presentation/manager/layout_cubit.dart';
 import 'package:doctor_hunt/features/home_feature/presentation/manager/layout_state.dart';
 import 'package:doctor_hunt/features/home_feature/presentation/view/widgets/custom_bottom_nav_bar_item.dart';
@@ -10,38 +11,35 @@ class LayoutView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return BlocProvider(
-      create: (BuildContext context)=>LayoutCubit(),
-      child: BlocConsumer<LayoutCubit,LayoutState>(
-        listener: (context,state){},
-        builder: (context,state){
-          var layoutCubit=LayoutCubit.get(context);
-          return  Scaffold(
-            body:layoutCubit.views[layoutCubit.index],
-            bottomNavigationBar: ClipRRect(
-              borderRadius: const BorderRadius.only(topRight: Radius.circular(25),topLeft: Radius.circular(25)),
-              child: BottomNavigationBar(
-                onTap: (index){
-                  layoutCubit.changeBottomNavBar(index);
-                },
-                backgroundColor: ColorManager.white,
-                type: BottomNavigationBarType.fixed,
-                selectedItemColor: ColorManager.green,
-                unselectedItemColor: ColorManager.lightGrey,
-
-                items:  [
-                  buildBottomNavBar(icon: Icons.home, isCurrentIndex: layoutCubit.index==0),
-                  buildBottomNavBar(icon: Icons.favorite, isCurrentIndex: layoutCubit.index==1 ),
-                  buildBottomNavBar(icon: Icons.menu_book, isCurrentIndex: layoutCubit.index==2 ),
-                  buildBottomNavBar(icon: Icons.chat, isCurrentIndex: layoutCubit.index==3),
-                ],
-              ),
+    return BlocConsumer<LayoutCubit, LayoutState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var layoutCubit = LayoutCubit.get(context);
+        return Scaffold(
+          body: layoutCubit.views[layoutCubit.index],
+          bottomNavigationBar: ClipRRect(
+            borderRadius: const BorderRadius.only(
+                topRight: Radius.circular(25), topLeft: Radius.circular(25)),
+            child: BottomNavigationBar(
+              onTap: (index) {
+                layoutCubit.changeBottomNavBar(index);
+              },
+              backgroundColor: ColorManager.white,
+              type: BottomNavigationBarType.fixed,
+              selectedItemColor: ColorManager.green,
+              unselectedItemColor: ColorManager.lightGrey,
+              currentIndex: layoutCubit.index,
+              items: const [
+                BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.favorite), label: 'Saved'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.chat), label: 'Messages'),
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
-
 }

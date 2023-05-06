@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 class RateWidget extends StatelessWidget {
-  const RateWidget({Key? key,required this.rate,required this.numOfRates})
+  const RateWidget({Key? key, required this.rate, required this.numOfRates})
       : super(key: key);
 
   final int rate;
@@ -18,13 +18,17 @@ class RateWidget extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
-          return  Icon(
+          return Icon(
             FontAwesomeIcons.solidStar,
-            color: ColorManager.yellow,
+            color: index < numOfRates
+                ? ColorManager.yellow
+                : ColorManager.lightGrey,
             size: 12,
           );
         },
-        separatorBuilder: (BuildContext context, int index)=>SizedBox(width: 2.w,),
+        separatorBuilder: (BuildContext context, int index) => SizedBox(
+          width: 2.w,
+        ),
         itemCount: 5,
       ),
     );

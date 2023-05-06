@@ -3,23 +3,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-class PopularDoctorsList extends StatelessWidget {
-  const PopularDoctorsList({Key? key}) : super(key: key);
+import '../../../data/models/doctors_model/doctors_model.dart';
 
+class PopularDoctorsList extends StatelessWidget {
+  const PopularDoctorsList({Key? key, required this.doctors}) : super(key: key);
+
+  final DoctorsModel doctors;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 28.h,
+      height: 30.h,
       child: ListView.separated(
           shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) => const PopularDoctorsItem(),
+          itemBuilder: (context, index) => PopularDoctorsItem(
+                doctor: doctors.results![index],
+              ),
           separatorBuilder: (context, index) => SizedBox(
                 width: 5.w,
               ),
-          itemCount: 4),
+          itemCount: doctors.results?.length ?? 0),
     );
   }
 }
-

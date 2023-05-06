@@ -12,7 +12,7 @@ class FeatureDoctorsList extends StatelessWidget {
       height: 22.h,
       padding: EdgeInsets.only(left: 5.w),
       child: ListView.separated(
-        physics: const BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) => const FeatureDoctorsItem(),
           separatorBuilder: (context, index) => SizedBox(
@@ -22,4 +22,3 @@ class FeatureDoctorsList extends StatelessWidget {
     );
   }
 }
-

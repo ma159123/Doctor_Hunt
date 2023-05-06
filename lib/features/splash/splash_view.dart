@@ -1,9 +1,15 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:doctor_hunt/core/utils/text_styles.dart';
+import 'package:doctor_hunt/features/auth_feature/data/models/user_model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../core/local/cache.dart';
 import '../../core/utils/app_routes.dart';
+import '../auth_feature/presentation/manager/auth_cubit.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
@@ -12,7 +18,8 @@ class SplashView extends StatefulWidget {
   State<SplashView> createState() => _SplashViewState();
 }
 
-class _SplashViewState extends State<SplashView> with SingleTickerProviderStateMixin {
+class _SplashViewState extends State<SplashView>
+    with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation<Offset> slideAnimation;
 
@@ -20,7 +27,8 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
   void initState() {
     // TODO: implement initState
     super.initState();
-    navigateToLogin();
+    detectInitialPage();
+    // navigateToLogin();
   }
 
   @override
@@ -29,6 +37,7 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
     super.dispose();
     animationController.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,16 +49,40 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
             SizedBox(
               height: 1.h,
             ),
-            const Text('Doctor Hunt',style: TextStyles.titleStyle25,),
+            const Text(
+              'Doctor Hunt',
+              style: TextStyles.titleStyle25,
+            ),
           ],
         ),
       ),
     );
   }
 
-  void navigateToLogin() {
-    Future.delayed(const Duration(seconds: 2)).then((value) {
-      GoRouter.of(context).push(AppRoutes.onBoardingViewRoute);
+  // void navigateToLogin() {
+  //   Future.delayed(const Duration(seconds: 2)).then((value) {
+  //     GoRouter.of(context).push(AppRoutes.onBoardingViewRoute);
+  //   });
+  // }
+
+  Future<void> detectInitialPage() async {
+    String widget;
+    final userJson = CacheHelper.getData(key: 'user') ?? '';
+    if (userJson != '') {
+      AuthCubit.get(context).userModel =
+          UserModel.fromJson(jsonDecode(userJson));
+    }
+
+    if (AuthCubit.get(context).userModel?.results?[0].id != null) {
+      print(AuthCubit.get(context).userModel?.results?[0].id);
+
+      widget = AppRoutes.homeViewRoute;
+    } else {
+      widget = AppRoutes.onBoardingViewRoute;
+      print(widget);
+    }
+    Timer(const Duration(seconds: 2), () {
+      GoRouter.of(context).push(widget);
     });
   }
 }

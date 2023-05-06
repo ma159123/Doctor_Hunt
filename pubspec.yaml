@@ -26,7 +26,16 @@ dependencies:
   pin_code_fields:
   bloc:
   flutter_bloc:
-
+  flutter_svg_provider:
+  image_picker: ^0.8.7+1
+  path_provider: ^2.0.14
+  flutter_svg: ^0.22.0
+  google_maps_flutter: ^2.2.5
+  provider:
+  equatable:
+  internet_connection_checker:
+  dartz:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:

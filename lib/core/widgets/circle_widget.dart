@@ -9,7 +9,7 @@ class CircleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height:2.h ,
+      height: 2.h,
       width: 4.w,
       decoration: BoxDecoration(
         color: ColorManager.green,
