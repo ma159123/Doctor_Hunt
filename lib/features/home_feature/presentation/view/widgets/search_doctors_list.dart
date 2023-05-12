@@ -3,7 +3,10 @@ import 'package:doctor_hunt/features/home_feature/presentation/view/book_view.da
 import 'package:doctor_hunt/features/home_feature/presentation/view/widgets/search_doctors_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../../../core/utils/app_routes.dart';
 
 class SearchDoctorsList extends StatelessWidget {
   const SearchDoctorsList({Key? key, required this.searchDoctorsResult})
@@ -17,10 +20,6 @@ class SearchDoctorsList extends StatelessWidget {
       child: ListView.separated(
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) => SearchDoctorsItem(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => BookView()));
-                },
                 doctorItem: searchDoctorsResult.results![index],
               ),
           separatorBuilder: (context, index) => SizedBox(

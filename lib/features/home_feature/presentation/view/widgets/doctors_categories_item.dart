@@ -15,7 +15,7 @@ class DoctorCategoriesItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 18.h,
-      padding: EdgeInsets.only(left: 10, right: 10, top: 2.h),
+      padding: EdgeInsets.only(left: 10, right: 10, top: 1.h),
       margin: const EdgeInsets.only(bottom: 10),
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
@@ -34,7 +34,8 @@ class DoctorCategoriesItem extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              GoRouter.of(context).push(AppRoutes.doctorDetailsViewRoute);
+              GoRouter.of(context)
+                  .push(AppRoutes.doctorDetailsViewRoute, extra: doctor);
             },
             child: Container(
               clipBehavior: Clip.antiAlias,
@@ -81,12 +82,12 @@ class DoctorCategoriesItem extends StatelessWidget {
                     SizedBox(
                       width: 1.w,
                     ),
+                    // Text(
+                    //   doctor.rating.toString() ?? '2.4',
+                    //   style: TextStyles.titleStyle18,
+                    // ),
                     Text(
-                      doctor.rating.toString() ?? '2.4',
-                      style: TextStyles.titleStyle18,
-                    ),
-                    Text(
-                      '(2475 views)',
+                      '(${doctor.rating.toString()} views)' ?? '(2475 views)',
                       style: TextStyles.titleStyle14.copyWith(
                           color: ColorManager.lightGrey,
                           fontWeight: FontWeight.w300),

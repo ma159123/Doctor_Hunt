@@ -1,6 +1,7 @@
 import 'package:doctor_hunt/core/utils/app_routes.dart';
 import 'package:doctor_hunt/core/utils/color_manager.dart';
 import 'package:doctor_hunt/core/utils/text_styles.dart';
+import 'package:doctor_hunt/features/auth_feature/presentation/manager/auth_cubit.dart';
 import 'package:doctor_hunt/features/home_feature/presentation/view/widgets/add_record_text_field.dart';
 import 'package:doctor_hunt/features/home_feature/presentation/view/widgets/medical_specialties_list.dart';
 import 'package:doctor_hunt/features/home_feature/presentation/view/widgets/popular_doctors_list.dart';
@@ -11,13 +12,14 @@ import 'package:sizer/sizer.dart';
 
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_button.dart';
+import '../../../auth_feature/presentation/views/login_view.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController searchController = TextEditingController();
+    var authCubit = AuthCubit.get(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -41,14 +43,66 @@ class ProfileView extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    CustomAppBar(
-                      title: 'All Records',
-                      onTap: () {
-                        GoRouter.of(context).pop();
-                      },
-                      textColor: ColorManager.white,
-                      bottomColor: ColorManager.white,
-                      iconColor: Colors.black,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomAppBar(
+                          title: 'All Records',
+                          onTap: () {
+                            GoRouter.of(context).pop();
+                          },
+                          textColor: ColorManager.white,
+                          bottomColor: ColorManager.white,
+                          iconColor: Colors.black,
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text('Confirm Logout'),
+                                      content: Text(
+                                          'Are you sure you want to log out?'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text(
+                                            'Cancel',
+                                            style: TextStyle(
+                                                color: ColorManager.green),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: Text(
+                                            'Ok',
+                                            style: TextStyle(
+                                                color: ColorManager.green),
+                                          ),
+                                          onPressed: () {
+                                            authCubit.signOut(context);
+                                            Navigator.pushAndRemoveUntil(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const LoginView()),
+                                                (Route<dynamic> route) =>
+                                                    false
+                                            );
+                                          },
+                                        )
+                                      ],
+                                    );
+                                  });
+                            },
+                            icon: Icon(
+                              Icons.logout_outlined,
+                              color: ColorManager.white,
+                              size: 30,
+                            ))
+                      ],
                     ),
                     SizedBox(
                       height: 1.h,
@@ -121,7 +175,13 @@ class ProfileView extends StatelessWidget {
               CustomButton(
                 width: 70.w,
                 onTap: () {
-                  GoRouter.of(context).push(AppRoutes.allRecordsViewRoute);
+                  authCubit.updateUser(
+                      userId: authCubit.userModel!.results![0].id!,
+                      name: 'Mohamed',
+                      email: authCubit.userModel!.results![0].email!,
+                      password: authCubit.userModel!.results![0].password!,
+                      dateOfBirth: '1990-01-01',
+                      favoriteDoctors: "644b136539f43985aa7536e7");
                 },
                 buttonText: 'Continue',
                 textColor: Colors.white,

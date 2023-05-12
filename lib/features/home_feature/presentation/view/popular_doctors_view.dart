@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../core/utils/app_routes.dart';
 import '../../../../core/utils/text_styles.dart';
 import '../manager/layout_cubit.dart';
 
@@ -36,10 +37,16 @@ class PopularDoctorsView extends StatelessWidget {
                           }),
                       Padding(
                         padding: EdgeInsets.only(right: 5.0.w),
-                        child: Icon(
-                          Icons.search,
-                          color: ColorManager.lightGrey,
-                          size: 30,
+                        child: IconButton(
+                          onPressed: () {
+                            GoRouter.of(context)
+                                .push(AppRoutes.searchViewRoute);
+                          },
+                          icon: Icon(
+                            Icons.search,
+                            color: ColorManager.lightGrey,
+                            size: 30,
+                          ),
                         ),
                       ),
                     ],
@@ -59,7 +66,7 @@ class PopularDoctorsView extends StatelessWidget {
                     height: 3.h,
                   ),
                   const Text(
-                    'Category',
+                    'Others',
                     style: TextStyles.titleStyle18,
                   ),
                 ],

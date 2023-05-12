@@ -27,3 +27,15 @@ class SignUpSuccessState extends AuthStates {
   UserModel userModel;
   SignUpSuccessState(this.userModel);
 }
+
+class UpdateUserLoadingState extends AuthStates {}
+
+class UpdateUserErrorState extends AuthStates {
+  String error;
+  UpdateUserErrorState(this.error);
+}
+
+class UpdateUserSuccessState extends AuthStates {
+  UserModel userModel;
+  UpdateUserSuccessState(this.userModel);
+}

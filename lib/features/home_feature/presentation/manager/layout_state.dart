@@ -1,5 +1,6 @@
 import 'package:doctor_hunt/features/home_feature/data/models/categories_model/categories_model.dart';
 
+import '../../data/models/doctor_model/doctor_model.dart';
 import '../../data/models/doctors_model/doctors_model.dart';
 
 abstract class LayoutState {}
@@ -20,6 +21,30 @@ class GetAllDoctorsErrorState extends LayoutState {
   GetAllDoctorsErrorState(this.error);
 }
 
+class GetDoctorsByIdLoadingState extends LayoutState {}
+
+class GetDoctorsByIdSuccessState extends LayoutState {
+  DoctorModel doctorModel;
+  GetDoctorsByIdSuccessState(this.doctorModel);
+}
+
+class GetDoctorsByIdErrorState extends LayoutState {
+  String error;
+  GetDoctorsByIdErrorState(this.error);
+}
+
+class GetDoctorsByCategoryLoadingState extends LayoutState {}
+
+class GetDoctorsByCategorySuccessState extends LayoutState {
+  DoctorsModel doctorsModel;
+  GetDoctorsByCategorySuccessState(this.doctorsModel);
+}
+
+class GetDoctorsByCategoryErrorState extends LayoutState {
+  String error;
+  GetDoctorsByCategoryErrorState(this.error);
+}
+
 class SearchDoctorsLoadingState extends LayoutState {}
 
 class SearchDoctorsSuccessState extends LayoutState {
@@ -33,7 +58,6 @@ class SearchDoctorsErrorState extends LayoutState {
 }
 
 class ClearSearchDoctorsSuccessState extends LayoutState {}
-
 
 class GetAllCategoriesLoadingState extends LayoutState {}
 

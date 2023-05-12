@@ -1,6 +1,8 @@
+import 'package:doctor_hunt/core/utils/app_routes.dart';
 import 'package:doctor_hunt/features/home_feature/data/models/doctors_model/doctors_model.dart';
 import 'package:doctor_hunt/features/home_feature/presentation/view/widgets/doctors_categories_item.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 
 class DoctorCategoriesList extends StatelessWidget {
@@ -11,19 +13,27 @@ class DoctorCategoriesList extends StatelessWidget {
   final bool isScrolled;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 18.h,
       child: ListView.separated(
           physics: isScrolled
               ? const BouncingScrollPhysics()
               : const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) => DoctorCategoriesItem(
-                doctor: doctor.results![index],
+          itemBuilder: (context, index) => GestureDetector(
+                onTap: () {
+                  GoRouter.of(context).push(
+                    AppRoutes.doctorDetailsViewRoute,
+                    extra: doctor.results![index],
+                  );
+                },
+                child: DoctorCategoriesItem(
+                  doctor: doctor.results![index],
+                ),
               ),
           separatorBuilder: (context, index) => SizedBox(
                 width: 5.w,
               ),
-          itemCount: 4),
+          itemCount: doctor.results?.length ?? 0),
     );
   }
 }

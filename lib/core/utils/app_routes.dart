@@ -1,7 +1,9 @@
 import 'package:doctor_hunt/features/auth_feature/presentation/views/login_view.dart';
 import 'package:doctor_hunt/features/auth_feature/presentation/views/register_view.dart';
+import 'package:doctor_hunt/features/home_feature/data/models/doctors_model/result.dart';
 import 'package:doctor_hunt/features/home_feature/presentation/view/add_record_view.dart';
 import 'package:doctor_hunt/features/home_feature/presentation/view/all_records_view.dart';
+import 'package:doctor_hunt/features/home_feature/presentation/view/book_view.dart';
 import 'package:doctor_hunt/features/home_feature/presentation/view/medical_records_view.dart';
 import 'package:doctor_hunt/features/home_feature/presentation/view/layout.dart';
 import 'package:doctor_hunt/features/home_feature/presentation/view/profile_view.dart';
@@ -46,7 +48,9 @@ abstract class AppRoutes {
       GoRoute(
         path: doctorDetailsViewRoute,
         builder: (BuildContext context, GoRouterState state) {
-          return const DoctorDetailsView();
+          return DoctorDetailsView(
+            doctor: state.extra as Result,
+          );
         },
       ),
       GoRoute(
@@ -107,6 +111,12 @@ abstract class AppRoutes {
         path: profileViewRoute,
         builder: (BuildContext context, GoRouterState state) {
           return const ProfileView();
+        },
+      ),
+      GoRoute(
+        path: bookDetailsViewRoute,
+        builder: (BuildContext context, GoRouterState state) {
+          return const BookView();
         },
       ),
       // GoRoute(

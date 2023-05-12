@@ -35,14 +35,11 @@ class MyApp extends StatelessWidget {
             Provider(
               create: (_) => LayoutCubit(
                   doctorsRepository: GetDoctorsRepository(),
-                  searchDoctorsRepository: SearchDoctorsRepository(), getCategoriesRepository: GetCategoriesRepository())
-                ..getAllDoctors()..getAllCategories(),
+                  searchDoctorsRepository: SearchDoctorsRepository(),
+                  getCategoriesRepository: GetCategoriesRepository())
+                ..getAllDoctors()
+                ..getAllCategories(),
             ),
-            // ChangeNotifierProvider(
-            //   create: (_) => AuthViewModel(
-            //     authRepository: context.read<AuthenticationRepository>(),
-            //   ),
-            // ),
           ],
           child: MaterialApp.router(
             useInheritedMediaQuery: true,

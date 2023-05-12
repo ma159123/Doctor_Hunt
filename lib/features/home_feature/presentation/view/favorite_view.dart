@@ -1,3 +1,4 @@
+import 'package:doctor_hunt/features/auth_feature/presentation/manager/auth_cubit.dart';
 import 'package:doctor_hunt/features/home_feature/data/models/doctors_model/doctors_model.dart';
 import 'package:doctor_hunt/features/home_feature/data/models/doctors_model/result.dart';
 import 'package:doctor_hunt/features/home_feature/presentation/view/widgets/doctors_categories_list.dart';
@@ -19,11 +20,13 @@ class FavoriteView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomAppBar(
-              title: 'Favourite Doctors',
-              onTap: () {
-                GoRouter.of(context).pop();
-              }),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              'Favourite Doctors',
+              style: TextStyles.titleStyle18,
+            ),
+          ),
           SizedBox(height: 5.h),
           SearchTextField(
             textEditingController: searchController,

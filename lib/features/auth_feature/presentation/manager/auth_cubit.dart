@@ -1,7 +1,11 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:doctor_hunt/core/utils/app_routes.dart';
+import 'package:doctor_hunt/features/auth_feature/presentation/views/login_view.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/local/cache.dart';
@@ -58,7 +62,38 @@ class AuthCubit extends Cubit<AuthStates> {
     }
   }
 
-  void signOut() {
+  Future<void> updateUser(
+      {required String userId,
+      required String name,
+      required String email,
+      required String password,
+      required String dateOfBirth,
+      required String? favoriteDoctors}) async {
+    emit(UpdateUserLoadingState());
+    try {
+      final authResponse = await _authRepository.updateUser(
+          userId: userId,
+          name: name,
+          email: email,
+          password: password,
+          dateOfBirth: dateOfBirth,
+          favoriteDoctors: favoriteDoctors);
+      userModel = const UserModel();
+      userModel = authResponse;
+      print('response: $userModel');
+      emit(UpdateUserSuccessState(authResponse));
+    } catch (e) {
+      emit(UpdateUserErrorState(e.toString()));
+      throw e;
+    }
+  }
+
+  void signOut(BuildContext context) {
+    CacheHelper.removeData(
+      key: 'user',
+    )!.then((value) {
+      print('user id removed successfully');
+    }).catchError(() {});
     // emit(AuthStates(response: null));
   }
 }

@@ -45,12 +45,12 @@ class _SplashViewState extends State<SplashView>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/images/splash_icon.png'),
+            Image.asset('assets/images/app-icon.png'),
             SizedBox(
               height: 1.h,
             ),
             const Text(
-              'Doctor Hunt',
+              'Roshetta',
               style: TextStyles.titleStyle25,
             ),
           ],
@@ -76,7 +76,7 @@ class _SplashViewState extends State<SplashView>
     if (AuthCubit.get(context).userModel?.results?[0].id != null) {
       print(AuthCubit.get(context).userModel?.results?[0].id);
 
-      widget = AppRoutes.homeViewRoute;
+      widget = AppRoutes.layoutViewRoute;
     } else {
       widget = AppRoutes.onBoardingViewRoute;
       print(widget);

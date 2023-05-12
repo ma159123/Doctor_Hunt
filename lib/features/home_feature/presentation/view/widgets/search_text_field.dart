@@ -12,6 +12,7 @@ class SearchTextField extends StatelessWidget {
   void Function()? onClear;
   bool? isValidation;
   String? validationText;
+  bool autofocus;
   bool isMaxLine = false;
   Widget? prefixIcon;
   Widget? suffixIcon;
@@ -36,6 +37,7 @@ class SearchTextField extends StatelessWidget {
     this.onTap,
     this.onClear,
     this.onSearch,
+    this.autofocus = false,
   }) : super(key: key);
 
   @override
@@ -43,12 +45,12 @@ class SearchTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
+        SizedBox(
           //padding: const EdgeInsets.all(5.0),
           width: width ?? 90.w,
           child: TextFormField(
             onTap: onTap ?? () {},
-            autofocus: false,
+            autofocus: autofocus,
             readOnly: isReadOnly,
             cursorColor: Colors.black,
             validator: validation ?? () {},

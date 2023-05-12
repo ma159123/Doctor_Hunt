@@ -39,6 +39,7 @@ class SearchView extends StatelessWidget {
                     hintText: 'Search',
                     validation: (val) {},
                     isReadOnly: false,
+                    autofocus: true,
                     onChange: (value) {
                       if (value == '') {
                         layoutCubit.clearSearchResults();

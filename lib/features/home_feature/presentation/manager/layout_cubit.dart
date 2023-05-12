@@ -1,4 +1,5 @@
 import 'package:doctor_hunt/features/home_feature/data/models/categories_model/categories_model.dart';
+import 'package:doctor_hunt/features/home_feature/data/models/doctor_model/doctor_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/models/doctors_model/doctors_model.dart';
@@ -51,6 +52,41 @@ class LayoutCubit extends Cubit<LayoutState> {
     });
   }
 
+  DoctorModel doctorModel=DoctorModel();
+  Future<void> getDoctorsByID({required String id}) async {
+    emit(GetDoctorsByIdLoadingState());
+    final response = await _doctorsRepository.getDoctorsById(id: id);
+    response.fold((failure) {
+      print('get doctors by id error: $failure');
+      emit(GetDoctorsByIdErrorState(failure.toString()));
+    }, (success) {
+      doctorModel = success;
+      print('get doctors by id success: $doctorsModel');
+      emit(GetDoctorsByIdSuccessState(success));
+    });
+  }
+
+  Future<void> getFavoritesDoctors({required String ids})async {
+
+  }
+
+  DoctorsModel specificDoctorsModel = const DoctorsModel();
+
+  Future<void> getDoctorsByCategory({required String? categoryId}) async {
+    specificDoctorsModel = const DoctorsModel();
+    emit(GetDoctorsByCategoryLoadingState());
+    final response =
+        await _doctorsRepository.getDoctorsByCategories(categoryId: categoryId);
+    response.fold((failure) {
+      print('get doctors error: $failure');
+      emit(GetDoctorsByCategoryErrorState(failure.toString()));
+    }, (success) {
+      specificDoctorsModel = success;
+      print('get doctors success: $doctorsModel');
+      emit(GetDoctorsByCategorySuccessState(success));
+    });
+  }
+
   DoctorsModel searchDoctorsModel = const DoctorsModel();
   Future<void> searchDoctors({String? name}) async {
     emit(SearchDoctorsLoadingState());
@@ -70,7 +106,7 @@ class LayoutCubit extends Cubit<LayoutState> {
     emit(ClearSearchDoctorsSuccessState());
   }
 
-  CategoriesModel categoriesModel=const CategoriesModel();
+  CategoriesModel categoriesModel = const CategoriesModel();
   Future<void> getAllCategories() async {
     emit(GetAllCategoriesLoadingState());
     final response = await _categoriesRepository.getAllCategories();

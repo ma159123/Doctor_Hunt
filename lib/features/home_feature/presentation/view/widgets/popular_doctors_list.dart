@@ -1,8 +1,10 @@
 import 'package:doctor_hunt/features/home_feature/presentation/view/widgets/popular_doctors_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../core/utils/app_routes.dart';
 import '../../../data/models/doctors_model/doctors_model.dart';
 
 class PopularDoctorsList extends StatelessWidget {
@@ -17,8 +19,16 @@ class PopularDoctorsList extends StatelessWidget {
           shrinkWrap: true,
           physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) => PopularDoctorsItem(
-                doctor: doctors.results![index],
+          itemBuilder: (context, index) => GestureDetector(
+                onTap: () {
+                  GoRouter.of(context).push(
+                    AppRoutes.doctorDetailsViewRoute,
+                    extra: doctors.results![index],
+                  );
+                },
+                child: PopularDoctorsItem(
+                  doctor: doctors.results![index],
+                ),
               ),
           separatorBuilder: (context, index) => SizedBox(
                 width: 5.w,
