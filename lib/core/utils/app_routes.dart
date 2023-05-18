@@ -1,18 +1,19 @@
+import 'package:doctor_hunt/features/auth_feature/data/models/user_model_as_patient/user_model_as_patient.dart';
 import 'package:doctor_hunt/features/auth_feature/presentation/views/login_view.dart';
 import 'package:doctor_hunt/features/auth_feature/presentation/views/register_view.dart';
-import 'package:doctor_hunt/features/home_feature/data/models/doctors_model/result.dart';
-import 'package:doctor_hunt/features/home_feature/presentation/view/add_record_view.dart';
-import 'package:doctor_hunt/features/home_feature/presentation/view/all_records_view.dart';
-import 'package:doctor_hunt/features/home_feature/presentation/view/book_view.dart';
-import 'package:doctor_hunt/features/home_feature/presentation/view/medical_records_view.dart';
-import 'package:doctor_hunt/features/home_feature/presentation/view/layout.dart';
-import 'package:doctor_hunt/features/home_feature/presentation/view/profile_view.dart';
-import 'package:doctor_hunt/features/home_feature/presentation/view/search_view.dart';
+import 'package:doctor_hunt/features/patient_home_feature/data/models/doctors_model/result.dart';
+import 'package:doctor_hunt/features/patient_home_feature/presentation/view/layout.dart';
+import 'package:doctor_hunt/features/patient_home_feature/presentation/view/profile_view.dart';
+import 'package:doctor_hunt/features/patient_home_feature/presentation/view/search_view.dart';
 import 'package:doctor_hunt/features/on_boarding/on_boarding_view.dart';
 import 'package:flutter/cupertino.dart';
-import '../../features/home_feature/presentation/view/doctor_details.dart';
-import '../../features/home_feature/presentation/view/home_view.dart';
-import '../../features/home_feature/presentation/view/popular_doctors_view.dart';
+import '../../features/book_feature/presentation/view/add_record_view.dart';
+import '../../features/book_feature/presentation/view/all_records_view.dart';
+import '../../features/book_feature/presentation/view/book_view.dart';
+import '../../features/book_feature/presentation/view/medical_records_view.dart';
+import '../../features/patient_home_feature/presentation/view/doctor_details.dart';
+import '../../features/patient_home_feature/presentation/view/home_view.dart';
+import '../../features/patient_home_feature/presentation/view/popular_doctors_view.dart';
 import '../../features/splash/splash_view.dart';
 import 'package:go_router/go_router.dart';
 
@@ -30,6 +31,7 @@ abstract class AppRoutes {
   static String addRecordViewRoute = '/addRecordView';
   static String allRecordsViewRoute = '/allRecordsView';
   static String profileViewRoute = '/profileView';
+  static String specializationViewRoute = '/specializationView';
 
   static final GoRouter router = GoRouter(
     routes: <RouteBase>[
@@ -62,7 +64,7 @@ abstract class AppRoutes {
       GoRoute(
         path: onBoardingViewRoute,
         builder: (BuildContext context, GoRouterState state) {
-          return OnBoardingView();
+          return const OnBoardingView();
         },
       ),
       GoRoute(
@@ -92,7 +94,7 @@ abstract class AppRoutes {
       GoRoute(
         path: addRecordViewRoute,
         builder: (BuildContext context, GoRouterState state) {
-          return AddRecordView();
+          return const AddRecordView();
         },
       ),
       GoRoute(
@@ -104,21 +106,35 @@ abstract class AppRoutes {
       GoRoute(
         path: allRecordsViewRoute,
         builder: (BuildContext context, GoRouterState state) {
-          return AllRecordsView();
+          return const AllRecordsView();
         },
       ),
       GoRoute(
         path: profileViewRoute,
         builder: (BuildContext context, GoRouterState state) {
-          return const ProfileView();
+          return PatientProfileView(
+            userModel: state.extra as UserModelAsPatient,
+          );
         },
       ),
       GoRoute(
         path: bookDetailsViewRoute,
         builder: (BuildContext context, GoRouterState state) {
-          return const BookView();
+          return  BookView(doctor: state.extra as Result,);
         },
       ),
+      // GoRoute(
+      //   path: specializationViewRoute,
+      //   builder: (BuildContext context, GoRouterState state) {
+      //     final List<dynamic> data = state.extra as List<dynamic>;
+      //     final String specialization = data[0] as String;
+      //     final Result specializationDoctorsResult = data[1] as Result;
+      //     return SpecializationView(
+      //       specialization: specialization,
+      //       specializationDoctorsResult: specializationDoctorsResult,
+      //     );
+      //   },
+      // ),
       // GoRoute(
       //   name:bookDetailsViewRoute ,
       //   path: bookDetailsViewRoute,

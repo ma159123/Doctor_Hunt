@@ -1,31 +1,59 @@
-import '../../data/models/user_model/user_model.dart';
+import 'package:doctor_hunt/features/auth_feature/data/models/user_model_as_patient/user_model_as_patient.dart';
+
+import '../../data/models/user_model_as_doctor/user_model.dart';
 
 abstract class AuthStates {}
 
 class AuthInitialState extends AuthStates {}
 
-class SignInLoadingState extends AuthStates {}
+class ChangePassAppearanceSuccessState extends AuthStates {}
 
-class SignInErrorState extends AuthStates {
+class SignInDoctorsLoadingState extends AuthStates {}
+
+class SignInDoctorsErrorState extends AuthStates {
   String error;
-  SignInErrorState(this.error);
+  SignInDoctorsErrorState(this.error);
 }
 
-class SignInSuccessState extends AuthStates {
-  UserModel userModel;
-  SignInSuccessState(this.userModel);
+class SignInDoctorsSuccessState extends AuthStates {
+  UserModelAsDoctor userModel;
+  SignInDoctorsSuccessState(this.userModel);
 }
 
-class SignUpLoadingState extends AuthStates {}
+class SignInPatientLoadingState extends AuthStates {}
 
-class SignUpErrorState extends AuthStates {
+class SignInPatientErrorState extends AuthStates {
   String error;
-  SignUpErrorState(this.error);
+  SignInPatientErrorState(this.error);
 }
 
-class SignUpSuccessState extends AuthStates {
-  UserModel userModel;
-  SignUpSuccessState(this.userModel);
+class SignInPatientSuccessState extends AuthStates {
+  UserModelAsPatient userModel;
+  SignInPatientSuccessState(this.userModel);
+}
+
+class SignUpDoctorsLoadingState extends AuthStates {}
+
+class SignUpDoctorsErrorState extends AuthStates {
+  String error;
+  SignUpDoctorsErrorState(this.error);
+}
+
+class SignUpDoctorsSuccessState extends AuthStates {
+  UserModelAsDoctor userModel;
+  SignUpDoctorsSuccessState(this.userModel);
+}
+
+class SignUpPatientLoadingState extends AuthStates {}
+
+class SignUpPatientErrorState extends AuthStates {
+  String error;
+  SignUpPatientErrorState(this.error);
+}
+
+class SignUpPatientSuccessState extends AuthStates {
+  UserModelAsPatient userModel;
+  SignUpPatientSuccessState(this.userModel);
 }
 
 class UpdateUserLoadingState extends AuthStates {}
@@ -36,6 +64,18 @@ class UpdateUserErrorState extends AuthStates {
 }
 
 class UpdateUserSuccessState extends AuthStates {
-  UserModel userModel;
+  UserModelAsPatient userModel;
   UpdateUserSuccessState(this.userModel);
+}
+
+class ChangeFavoriteLoadingState extends AuthStates {}
+
+class ChangeFavoriteErrorState extends AuthStates {
+  String error;
+  ChangeFavoriteErrorState(this.error);
+}
+
+class ChangeFavoriteSuccessState extends AuthStates {
+  UserModelAsPatient userModel;
+  ChangeFavoriteSuccessState(this.userModel);
 }

@@ -9,6 +9,7 @@ class ColorManager {
   static Color green = HexColor.fromHex('#0EBE7F');
   static Color darkGreen = HexColor.fromHex('#0EBE7E');
   static Color lightGreen = HexColor.fromHex('#07D9AD');
+  static Color categoryColor = HexColor.fromHex('#2753F3');
   static Color yellow = HexColor.fromHex('#ffdd4f');
   static Color white = HexColor.fromHex("#FFFFFF");
   static Color error = HexColor.fromHex("#e61f34"); // red color
@@ -18,7 +19,7 @@ extension HexColor on Color {
   static Color fromHex(String hexColorString) {
     hexColorString = hexColorString.replaceAll('#', '');
     if (hexColorString.length == 6) {
-      hexColorString = "FF" + hexColorString; // 8 char with opacity 100%
+      hexColorString = "FF$hexColorString"; // 8 char with opacity 100%
     }
     return Color(int.parse(hexColorString, radix: 16));
   }

@@ -4,13 +4,14 @@ import 'package:doctor_hunt/core/widgets/custom_button.dart';
 import 'package:doctor_hunt/features/auth_feature/presentation/views/widgets/sign_with_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/utils/app_routes.dart';
 import '../../../../core/utils/text_styles.dart';
+import '../../../../core/widgets/custom_snackbar.dart';
 import '../manager/auth_cubit.dart';
 import '../manager/auth_state.dart';
 
@@ -40,31 +41,43 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<AuthCubit, AuthStates>(listener: (context, state) {
-        if (state is SignUpSuccessState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                state.userModel.message!,
-                style: TextStyle(color: ColorManager.white),
-              ),
-              backgroundColor: ColorManager.green,
-            ),
-          );
+        if (state is SignUpDoctorsErrorState) {
+          showSnackBar(
+              context: context,
+              msg: state.error,
+              backgroundColor: ColorManager.error);
+        } else if (state is SignUpDoctorsSuccessState) {
+          showSnackBar(
+              context: context,
+              msg: state.userModel.message!,
+              backgroundColor: ColorManager.green);
           GoRouter.of(context).push(AppRoutes.loginViewRoute);
-        } else if (state is SignUpErrorState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-                content: Text(
-                  state.error,
-                  style: TextStyle(color: ColorManager.white),
-                ),
-                backgroundColor: ColorManager.error),
-          );
+        }
+        if (state is SignUpPatientErrorState) {
+          showSnackBar(
+              context: context,
+              msg: state.error,
+              backgroundColor: ColorManager.error);
+        } else if (state is SignUpPatientSuccessState) {
+          showSnackBar(
+              context: context,
+              msg: state.userModel.message!,
+              backgroundColor: ColorManager.green);
+          GoRouter.of(context).push(AppRoutes.loginViewRoute);
         }
       }, builder: (context, state) {
+        var authCubit = AuthCubit.get(context);
         return SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.only(top: 20.h, right: 5.w, left: 5.w),
+            height: 100.h,
+            padding: EdgeInsets.only(top: 15.h, right: 5.w, left: 5.w),
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: Svg(
+                    'assets/images/background.svg',
+                  ),
+                  fit: BoxFit.cover),
+            ),
             child: Form(
               key: _formKey,
               child: Column(
@@ -110,18 +123,18 @@ class _RegisterViewState extends State<RegisterView> {
                     height: 3.h,
                   ),
                   AppTextField(
-                      textEditingController: nameController,
-                      hintText: 'Name',
-                      validation: (val) {},
-                      isPass: false),
+                    textEditingController: nameController,
+                    hintText: 'Name',
+                    validation: (val) {},
+                  ),
                   SizedBox(
                     height: 2.h,
                   ),
                   AppTextField(
-                      textEditingController: emailController,
-                      hintText: 'Email',
-                      validation: (val) {},
-                      isPass: false),
+                    textEditingController: emailController,
+                    hintText: 'Email',
+                    validation: (val) {},
+                  ),
                   SizedBox(
                     height: 2.h,
                   ),
@@ -129,9 +142,16 @@ class _RegisterViewState extends State<RegisterView> {
                     textEditingController: passController,
                     hintText: 'Password',
                     validation: (val) {},
-                    isPass: true,
-                    suffixIcon: const Icon(
-                      Icons.remove_red_eye,
+                    obscureText: authCubit.isShown,
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        authCubit.showPassword();
+                      },
+                      icon: Icon(
+                        authCubit.isShown == false
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -173,7 +193,8 @@ class _RegisterViewState extends State<RegisterView> {
                   SizedBox(
                     height: 5.h,
                   ),
-                  state is SignUpLoadingState
+                  state is SignUpDoctorsLoadingState ||
+                          state is SignUpPatientLoadingState
                       ? Center(
                           child: CircularProgressIndicator(
                           color: ColorManager.green,
@@ -184,14 +205,25 @@ class _RegisterViewState extends State<RegisterView> {
                           color: ColorManager.green,
                           onTap: () async {
                             if (_formKey.currentState!.validate()) {
-                              await context
-                                  .read<AuthCubit>()
-                                  .registerWithEmailAndPassword(
-                                    nameController.text,
-                                    emailController.text,
-                                    passController.text,
-                                    type,
-                                  );
+                              if (type == 'patient') {
+                                await context
+                                    .read<AuthCubit>()
+                                    .registerForPatient(
+                                      nameController.text,
+                                      emailController.text,
+                                      passController.text,
+                                      type,
+                                    );
+                              } else {
+                                await context
+                                    .read<AuthCubit>()
+                                    .registerForDoctors(
+                                      nameController.text,
+                                      emailController.text,
+                                      passController.text,
+                                      type,
+                                    );
+                              }
                             }
                           },
                         ),

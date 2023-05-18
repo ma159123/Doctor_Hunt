@@ -8,6 +8,8 @@ import '../../core/widgets/custom_button.dart';
 import 'model/on_boarding_model.dart';
 
 class OnBoardingView extends StatefulWidget {
+  const OnBoardingView({super.key});
+
   @override
   _OnBoardingViewState createState() => _OnBoardingViewState();
 }

@@ -1,7 +1,6 @@
 import 'package:doctor_hunt/core/utils/color_manager.dart';
 import 'package:doctor_hunt/core/utils/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 class SignWithButton extends StatelessWidget {

@@ -1,5 +1,4 @@
 import 'package:doctor_hunt/core/utils/app_constant.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -53,10 +52,10 @@ class _ForgotPassWidgetState extends State<ForgotPassWidget> {
             height: 3.h,
           ),
           AppTextField(
-              textEditingController: widget.controller,
-              hintText: 'Email',
-              validation: (val) {},
-              isPass: false),
+            textEditingController: widget.controller,
+            hintText: 'Email',
+            validation: (val) {},
+          ),
           SizedBox(
             height: 3.h,
           ),

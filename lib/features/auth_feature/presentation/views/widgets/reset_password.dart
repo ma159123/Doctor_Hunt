@@ -55,10 +55,6 @@ class _ResetPassWidgetState extends State<ResetPassWidget> {
             textEditingController: newPassController,
             hintText: 'New Password',
             validation: (val) {},
-            isPass: true,
-            suffixIcon: const Icon(
-              Icons.remove_red_eye,
-            ),
           ),
           SizedBox(
             height: 1.5.h,
@@ -67,10 +63,6 @@ class _ResetPassWidgetState extends State<ResetPassWidget> {
             textEditingController: resetPassController,
             hintText: 'Re-enter Password',
             validation: (val) {},
-            isPass: true,
-            suffixIcon: const Icon(
-              Icons.remove_red_eye,
-            ),
           ),
           SizedBox(
             height: 4.h,

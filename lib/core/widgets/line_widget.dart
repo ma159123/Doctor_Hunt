@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:sizer/sizer.dart';
 
-import '../utils/color_manager.dart';
-
 class LineWidget extends StatelessWidget {
   const LineWidget({Key? key, required this.color}) : super(key: key);
   final Color color;

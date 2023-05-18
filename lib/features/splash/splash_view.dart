@@ -2,7 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:doctor_hunt/core/utils/text_styles.dart';
-import 'package:doctor_hunt/features/auth_feature/data/models/user_model/user_model.dart';
+import 'package:doctor_hunt/features/auth_feature/data/models/user_model_as_doctor/user_model.dart';
+import 'package:doctor_hunt/features/auth_feature/data/models/user_model_as_patient/user_model_as_patient.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
@@ -67,14 +68,24 @@ class _SplashViewState extends State<SplashView>
 
   Future<void> detectInitialPage() async {
     String widget;
-    final userJson = CacheHelper.getData(key: 'user') ?? '';
-    if (userJson != '') {
-      AuthCubit.get(context).userModel =
-          UserModel.fromJson(jsonDecode(userJson));
+    final doctorJson = CacheHelper.getData(key: 'doctor') ?? '';
+    final patientJson = CacheHelper.getData(key: 'patient') ?? '';
+    if (doctorJson != '') {
+      AuthCubit.get(context).userModelAsDoctor =
+          UserModelAsDoctor.fromJson(jsonDecode(doctorJson));
     }
 
-    if (AuthCubit.get(context).userModel?.results?[0].id != null) {
-      print(AuthCubit.get(context).userModel?.results?[0].id);
+    if (patientJson != '') {
+      AuthCubit.get(context).userModelAsPatient =
+          UserModelAsPatient.fromJson(jsonDecode(patientJson));
+    }
+
+    if (AuthCubit.get(context).userModelAsDoctor?.results?[0].id != null) {
+      print(AuthCubit.get(context).userModelAsDoctor?.results?[0].id);
+
+      widget = AppRoutes.layoutViewRoute;
+    } else if (AuthCubit.get(context).userModelAsPatient?.result?.id != null) {
+      print(AuthCubit.get(context).userModelAsPatient?.result?.id);
 
       widget = AppRoutes.layoutViewRoute;
     } else {

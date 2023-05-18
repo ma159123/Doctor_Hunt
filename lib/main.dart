@@ -1,9 +1,9 @@
 import 'package:doctor_hunt/core/utils/app_routes.dart';
 import 'package:doctor_hunt/features/auth_feature/presentation/manager/auth_cubit.dart';
-import 'package:doctor_hunt/features/home_feature/data/repo/get_categories_repo.dart';
-import 'package:doctor_hunt/features/home_feature/data/repo/get_doctors_repo.dart';
-import 'package:doctor_hunt/features/home_feature/data/repo/search_doctors_repo.dart';
-import 'package:doctor_hunt/features/home_feature/presentation/manager/layout_cubit.dart';
+import 'package:doctor_hunt/features/patient_home_feature/data/repo/get_categories_repo.dart';
+import 'package:doctor_hunt/features/patient_home_feature/data/repo/get_doctors_repo.dart';
+import 'package:doctor_hunt/features/patient_home_feature/data/repo/search_doctors_repo.dart';
+import 'package:doctor_hunt/features/patient_home_feature/presentation/manager/layout_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +11,8 @@ import 'package:sizer/sizer.dart';
 
 import 'core/local/cache.dart';
 import 'features/auth_feature/data/repo/authentication_repository.dart';
+import 'features/book_feature/data/repo/appointment_repo.dart';
+import 'features/book_feature/presentation/manager/book_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +33,10 @@ class MyApp extends StatelessWidget {
             Provider(
               create: (_) =>
                   AuthCubit(authRepository: AuthenticationRepository()),
+            ),
+            Provider(
+              create: (BuildContext context) =>
+                  BookCubit(appointmentRepository: AppointmentRepository()),
             ),
             Provider(
               create: (_) => LayoutCubit(

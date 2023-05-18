@@ -15,7 +15,7 @@ class AppTextField extends StatelessWidget {
   Widget? suffixIcon;
   double? width;
   double? radius;
-  bool isPass = false;
+  bool? obscureText;
   var onTap;
   AppTextField(
       {Key? key,
@@ -30,7 +30,7 @@ class AppTextField extends StatelessWidget {
       this.radius,
       this.suffixIcon,
       this.onChange,
-      required this.isPass,
+      this.obscureText,
       this.onTap})
       : super(key: key);
 
@@ -44,10 +44,13 @@ class AppTextField extends StatelessWidget {
           width: width ?? 90.w,
           child: TextFormField(
             onTap: onTap ?? () {},
-            obscureText: isPass,
+            obscureText: obscureText ?? false,
             autofocus: false,
             cursorColor: Colors.black,
-            validator: validation ?? () {},
+            validator: validation ??
+                () {
+                  return null;
+                },
             onChanged: onChange ?? (v) {},
             keyboardType: TextInputType.emailAddress,
             maxLines: isMaxLine ? 2 : 1,

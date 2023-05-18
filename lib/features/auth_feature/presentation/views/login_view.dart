@@ -1,4 +1,5 @@
 import 'package:doctor_hunt/core/utils/color_manager.dart';
+import 'package:doctor_hunt/core/widgets/custom_snackbar.dart';
 import 'package:doctor_hunt/features/auth_feature/presentation/views/widgets/app_text_field.dart';
 import 'package:doctor_hunt/core/widgets/custom_button.dart';
 import 'package:doctor_hunt/features/auth_feature/presentation/views/widgets/forgot_pass_bottom_sheet.dart';
@@ -27,41 +28,44 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     var emailController = TextEditingController();
     var passController = TextEditingController();
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     String type = 'patient';
-    bool _isPatientSelected = true;
+    bool isPatientSelected = true;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocConsumer<AuthCubit, AuthStates>(
         listener: (context, state) {
-          if (state is SignInErrorState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  state.error,
-                  style: TextStyle(color: ColorManager.white),
-                ),
-                backgroundColor: ColorManager.error,
-              ),
-            );
-          } else if (state is SignInSuccessState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  state.userModel.message!,
-                  style: TextStyle(color: ColorManager.white),
-                ),
-                backgroundColor: ColorManager.green,
-              ),
-            );
+          if (state is SignInDoctorsErrorState) {
+            showSnackBar(
+                context: context,
+                msg: state.error,
+                backgroundColor: ColorManager.error);
+          } else if (state is SignInDoctorsSuccessState) {
+            showSnackBar(
+                context: context,
+                msg: state.userModel.message!,
+                backgroundColor: ColorManager.green);
+            GoRouter.of(context).push(AppRoutes.layoutViewRoute);
+          }
+          if (state is SignInPatientErrorState) {
+            showSnackBar(
+                context: context,
+                msg: state.error,
+                backgroundColor: ColorManager.error);
+          } else if (state is SignInPatientSuccessState) {
+            showSnackBar(
+                context: context,
+                msg: state.userModel.message!,
+                backgroundColor: ColorManager.green);
             GoRouter.of(context).push(AppRoutes.layoutViewRoute);
           }
         },
         builder: (context, state) {
+          var authCubit = AuthCubit.get(context);
           return Container(
             height: 100.h,
-            padding: EdgeInsets.only(top: 20.h, right: 5.w, left: 5.w),
+            padding: EdgeInsets.only(top: 15.h, right: 5.w, left: 5.w),
             decoration: const BoxDecoration(
               image: DecorationImage(
                   image: Svg(
@@ -70,8 +74,9 @@ class _LoginViewState extends State<LoginView> {
                   fit: BoxFit.cover),
             ),
             child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Form(
-                key: _formKey,
+                key: formKey,
                 child: Column(
                   children: [
                     const Text(
@@ -114,10 +119,10 @@ class _LoginViewState extends State<LoginView> {
                       height: 3.h,
                     ),
                     AppTextField(
-                        textEditingController: emailController,
-                        hintText: 'Email',
-                        validation: (val) {},
-                        isPass: false),
+                      textEditingController: emailController,
+                      hintText: 'Email',
+                      validation: (val) {},
+                    ),
                     SizedBox(
                       height: 2.h,
                     ),
@@ -125,9 +130,16 @@ class _LoginViewState extends State<LoginView> {
                       textEditingController: passController,
                       hintText: 'Password',
                       validation: (val) {},
-                      isPass: true,
-                      suffixIcon: const Icon(
-                        Icons.remove_red_eye,
+                      obscureText: authCubit.isShown,
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          authCubit.showPassword();
+                        },
+                        icon: Icon(
+                          authCubit.isShown == false
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -139,10 +151,10 @@ class _LoginViewState extends State<LoginView> {
                         Row(
                           children: <Widget>[
                             Checkbox(
-                              value: _isPatientSelected,
+                              value: isPatientSelected,
                               onChanged: (bool? value) {
                                 setState(() {
-                                  _isPatientSelected = value!;
+                                  isPatientSelected = value!;
                                   type = 'patient';
                                 });
                               },
@@ -153,10 +165,10 @@ class _LoginViewState extends State<LoginView> {
                         Row(
                           children: <Widget>[
                             Checkbox(
-                              value: !_isPatientSelected,
+                              value: !isPatientSelected,
                               onChanged: (bool? value) {
                                 setState(() {
-                                  _isPatientSelected = !value!;
+                                  isPatientSelected = !value!;
                                   type = 'doctor';
                                 });
                               },
@@ -169,7 +181,8 @@ class _LoginViewState extends State<LoginView> {
                     SizedBox(
                       height: 4.h,
                     ),
-                    state is SignInLoadingState
+                    state is SignInDoctorsLoadingState ||
+                            state is SignInPatientLoadingState
                         ? Center(
                             child: CircularProgressIndicator(
                             color: ColorManager.green,
@@ -179,14 +192,20 @@ class _LoginViewState extends State<LoginView> {
                             textColor: Colors.white,
                             color: ColorManager.green,
                             onTap: () {
-                              if (_formKey.currentState!.validate()) {
-                                context
-                                    .read<AuthCubit>()
-                                    .signInWithEmailAndPassword(
-                                      emailController.text,
-                                      passController.text,
-                                      type,
-                                    );
+                              if (formKey.currentState!.validate()) {
+                                if (type == 'doctor') {
+                                  AuthCubit.get(context).signInForDoctors(
+                                    emailController.text,
+                                    passController.text,
+                                    type,
+                                  );
+                                } else {
+                                  AuthCubit.get(context).signInForPatients(
+                                    emailController.text,
+                                    passController.text,
+                                    type,
+                                  );
+                                }
                               }
                             },
                           ),

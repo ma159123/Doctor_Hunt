@@ -13,7 +13,7 @@ class CurrentDoctorCases extends StatelessWidget {
       child: Container(
         height: 15.h,
         width: 85.w,
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         margin: const EdgeInsets.only(bottom: 10),
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(

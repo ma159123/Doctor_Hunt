@@ -1,15 +1,12 @@
 import 'dart:convert';
 
-import 'package:bloc/bloc.dart';
-import 'package:doctor_hunt/core/utils/app_routes.dart';
-import 'package:doctor_hunt/features/auth_feature/presentation/views/login_view.dart';
+import 'package:doctor_hunt/features/auth_feature/data/models/user_model_as_patient/user_model_as_patient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
-import '../../../../core/errors/exceptions.dart';
 import '../../../../core/local/cache.dart';
-import '../../data/models/user_model/user_model.dart';
+import '../../data/models/user_model_as_doctor/user_model.dart';
 import '../../data/repo/authentication_repository.dart';
 import 'auth_state.dart';
 
@@ -22,78 +19,146 @@ class AuthCubit extends Cubit<AuthStates> {
 
   static AuthCubit get(context) => BlocProvider.of(context);
 
-  UserModel? userModel;
+  bool isShown = false;
+  void showPassword() {
+    isShown = !isShown;
+    emit(ChangePassAppearanceSuccessState());
+  }
 
-  Future<void> signInWithEmailAndPassword(
+  UserModelAsDoctor? userModelAsDoctor;
+  UserModelAsPatient? userModelAsPatient;
+  Future<void> signInForDoctors(
       String email, String password, String type) async {
-    emit(SignInLoadingState());
+    emit(SignInDoctorsLoadingState());
     try {
-      final authResponse = await _authRepository.signInWithEmailAndPassword(
-          email, password, type);
-      userModel = authResponse;
+      final authResponse =
+          await _authRepository.signInForDoctors(email, password, type);
+      userModelAsDoctor = authResponse;
       CacheHelper.saveData(
-        key: 'user',
-        value: jsonEncode(userModel),
+        key: 'doctor',
+        value: jsonEncode(userModelAsDoctor),
       )!
           .then((value) {
         print('user id saved successfully: ${authResponse.message}');
-      }).catchError(() {});
-      print('user model :  ${userModel?.results}');
+      }).catchError((error) {});
+      print('user model :  ${userModelAsDoctor?.results}');
       print(' authResponse :  ${authResponse.message}');
-      emit(SignInSuccessState(authResponse));
+      emit(SignInDoctorsSuccessState(authResponse));
     } catch (e) {
-      emit(SignInErrorState(e.toString()));
-      throw e;
+      emit(SignInDoctorsErrorState(e.toString()));
+      rethrow;
     }
   }
 
-  Future<void> registerWithEmailAndPassword(
-      String name, String email, String password, String type) async {
-    emit(SignUpLoadingState());
+  Future<void> signInForPatients(
+      String email, String password, String type) async {
+    emit(SignInPatientLoadingState());
     try {
-      final authResponse = await _authRepository.registerWithEmailAndPassword(
-          name, email, password, type);
-      userModel = authResponse;
-      print('response: $userModel');
-      emit(SignUpSuccessState(authResponse));
+      final authResponse =
+          await _authRepository.signInForPatient(email, password, type);
+      userModelAsPatient = authResponse;
+      CacheHelper.saveData(
+        key: 'patient',
+        value: jsonEncode(userModelAsPatient),
+      )!
+          .then((value) {
+        print('user id saved successfully: ${authResponse.message}');
+      }).catchError((error) {});
+      print('user model :  ${userModelAsPatient?.result}');
+      print(' authResponse :  ${authResponse.message}');
+      emit(SignInPatientSuccessState(authResponse));
     } catch (e) {
-      emit(SignUpErrorState(e.toString()));
-      throw e;
+      emit(SignInPatientErrorState(e.toString()));
+      rethrow;
     }
   }
 
-  Future<void> updateUser(
-      {required String userId,
-      required String name,
-      required String email,
-      required String password,
-      required String dateOfBirth,
-      required String? favoriteDoctors}) async {
+  Future<void> registerForPatient(
+      String name, String email, String password, String type) async {
+    emit(SignUpPatientLoadingState());
+    try {
+      final authResponse =
+          await _authRepository.registerForPatient(name, email, password, type);
+      userModelAsPatient = authResponse;
+      print('response: $userModelAsPatient');
+      emit(SignUpPatientSuccessState(authResponse));
+    } catch (e) {
+      emit(SignUpPatientErrorState(e.toString()));
+      rethrow;
+    }
+  }
+
+  Future<void> registerForDoctors(
+      String name, String email, String password, String type) async {
+    emit(SignUpDoctorsLoadingState());
+    try {
+      final authResponse =
+          await _authRepository.registerForDoctors(name, email, password, type);
+      userModelAsDoctor = authResponse;
+      print('response: $userModelAsDoctor');
+      emit(SignUpDoctorsSuccessState(authResponse));
+    } catch (e) {
+      emit(SignUpDoctorsErrorState(e.toString()));
+      rethrow;
+    }
+  }
+
+  Future<void> updatePatient(
+      {String? userId,
+      String? name,
+      String? email,
+      String? password,
+      String? dateOfBirth,
+      String? image,
+      List<dynamic>? favoriteDoctors}) async {
     emit(UpdateUserLoadingState());
     try {
       final authResponse = await _authRepository.updateUser(
-          userId: userId,
-          name: name,
-          email: email,
-          password: password,
-          dateOfBirth: dateOfBirth,
-          favoriteDoctors: favoriteDoctors);
-      userModel = const UserModel();
-      userModel = authResponse;
-      print('response: $userModel');
+        userId: userId ?? userModelAsPatient!.result!.id!,
+        name: name ?? userModelAsPatient!.result!.name!,
+        email: email ?? userModelAsPatient!.result!.email!,
+        password: password ?? userModelAsPatient!.result!.password!,
+        dateOfBirth: dateOfBirth ??
+            DateFormat('yyyy-MM-dd').format(
+                userModelAsPatient!.result?.dateOfBirth ?? DateTime.now()),
+        favoriteDoctors:
+            favoriteDoctors ?? userModelAsPatient!.result?.favoriteDoctors,
+        image: image,
+      );
+      userModelAsPatient = const UserModelAsPatient();
+      userModelAsPatient = authResponse;
+      CacheHelper.saveData(
+        key: 'patient',
+        value: jsonEncode(userModelAsPatient),
+      )!
+          .then((value) {
+        print('user id saved successfully: ${authResponse.message}');
+      }).catchError((error) {});
+      print('response: $userModelAsPatient');
       emit(UpdateUserSuccessState(authResponse));
     } catch (e) {
       emit(UpdateUserErrorState(e.toString()));
-      throw e;
+      rethrow;
     }
   }
 
   void signOut(BuildContext context) {
-    CacheHelper.removeData(
-      key: 'user',
-    )!.then((value) {
-      print('user id removed successfully');
-    }).catchError(() {});
+    if (userModelAsPatient?.result != null) {
+      CacheHelper.removeData(
+        key: 'patient',
+      )!
+          .then((value) {
+        print('patient id removed successfully');
+      }).catchError((error) {});
+    } else {
+      CacheHelper.removeData(
+        key: 'doctor',
+      )!
+          .then((value) {
+        print('doctor id removed successfully');
+      }).catchError((error) {});
+    }
+
     // emit(AuthStates(response: null));
   }
 }
