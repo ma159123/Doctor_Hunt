@@ -190,8 +190,8 @@ class _PatientProfileViewState extends State<PatientProfileView> {
                 width: 70.w,
                 onTap: () {
                   print('selected image:$_selectedImagePath');
-                  print(
-                      authCubit.userModelAsPatient!.result!.favoriteDoctors);
+                  print(authCubit.userModelAsPatient!.result!.favoriteDoctors);
+                  print(authCubit.userModelAsPatient!.result!.id);
                   authCubit.updatePatient(
                       userId: authCubit.userModelAsPatient!.result!.id!,
                       name: nameController.text,
@@ -199,7 +199,7 @@ class _PatientProfileViewState extends State<PatientProfileView> {
                       password: authCubit.userModelAsPatient!.result!.password!,
                       dateOfBirth: dateController.text,
                       favoriteDoctors:
-                          authCubit.userModelAsPatient!.result!.favoriteDoctors,
+                          authCubit.userModelAsPatient?.result?.favoriteDoctors,
                       image: _selectedImagePath ??
                           authCubit.userModelAsPatient!.result!.image!);
                 },

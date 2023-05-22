@@ -62,7 +62,7 @@ class AuthCubit extends Cubit<AuthStates> {
         value: jsonEncode(userModelAsPatient),
       )!
           .then((value) {
-        print('user id saved successfully: ${authResponse.message}');
+        print('user id saved successfully: ${authResponse.token}');
       }).catchError((error) {});
       print('user model :  ${userModelAsPatient?.result}');
       print(' authResponse :  ${authResponse.message}');
@@ -114,6 +114,7 @@ class AuthCubit extends Cubit<AuthStates> {
     emit(UpdateUserLoadingState());
     try {
       final authResponse = await _authRepository.updateUser(
+        token:userModelAsPatient!.token ,
         userId: userId ?? userModelAsPatient!.result!.id!,
         name: name ?? userModelAsPatient!.result!.name!,
         email: email ?? userModelAsPatient!.result!.email!,
@@ -121,8 +122,8 @@ class AuthCubit extends Cubit<AuthStates> {
         dateOfBirth: dateOfBirth ??
             DateFormat('yyyy-MM-dd').format(
                 userModelAsPatient!.result?.dateOfBirth ?? DateTime.now()),
-        favoriteDoctors:
-            favoriteDoctors ?? userModelAsPatient!.result?.favoriteDoctors,
+        favoriteDoctors: favoriteDoctors,
+        // favoriteDoctors ?? userModelAsPatient!.result?.favoriteDoctors,
         image: image ?? userModelAsPatient!.result?.image,
       );
       userModelAsPatient = const UserModelAsPatient();
@@ -139,6 +140,7 @@ class AuthCubit extends Cubit<AuthStates> {
       emit(UpdateUserSuccessState(authResponse));
     } catch (e) {
       emit(UpdateUserErrorState(e.toString()));
+      print(e);
       rethrow;
     }
   }

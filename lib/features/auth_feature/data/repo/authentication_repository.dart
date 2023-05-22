@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:doctor_hunt/core/utils/app_constant.dart';
+import 'package:doctor_hunt/features/auth_feature/presentation/manager/auth_cubit.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/user_model_as_doctor/user_model.dart';
@@ -87,20 +88,22 @@ class AuthenticationRepository {
     required String password,
     required String dateOfBirth,
     String? image,
+    String? token,
     required List<dynamic>? favoriteDoctors,
   }) async {
+    print('started@@@@@@@@@@@@@@@@@@@@$token');
     final response = await http.put(
       Uri.parse('${AppConstants.BASE_URL}/api/patient/$userId'),
       headers: {
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjQ0ZGEyMDc1YzdkZjE0Yzc3NWFjNjAzIiwiaWF0IjoxNjgyODA5MzUxLCJleHAiOjE3MTQzNDUzNTF9.G8RZMUgP_p63j5jOiErrWj2STEz6H_W3DgCPuZT9Vc0'
+        'Authorization':token!,
+
       },
       body: {
         'name': name,
         'email': email,
         'password': password,
         "DateOfBirth": dateOfBirth,
-        "favoriteDoctors": favoriteDoctors ?? [],
+        "favoriteDoctors": favoriteDoctors ,
         "image": image,
         "balance": '10000',
       },

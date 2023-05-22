@@ -38,7 +38,8 @@ class FavoriteDoctorsItem extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context,AppRoutes.doctorDetailsViewRoute, arguments: doctor);
+              Navigator.pushNamed(context, AppRoutes.doctorDetailsViewRoute,
+                  arguments: doctor);
             },
             child: Container(
               clipBehavior: Clip.antiAlias,
@@ -106,8 +107,8 @@ class FavoriteDoctorsItem extends StatelessWidget {
                 authCubit.userModelAsPatient!.result!.favoriteDoctors
                     ?.remove('${doctor.id}');
                 authCubit.updatePatient(
-                  favoriteDoctors:
-                      authCubit.userModelAsPatient!.result!.favoriteDoctors,
+                  favoriteDoctors: authCubit.userModelAsPatient!.result!
+                      .favoriteDoctors as List<String>,
                 );
                 LayoutCubit.get(context).getFavoritesDoctors(
                     ids: AuthCubit.get(context)
