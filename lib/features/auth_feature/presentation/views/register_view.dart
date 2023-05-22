@@ -142,13 +142,13 @@ class _RegisterViewState extends State<RegisterView> {
                     textEditingController: passController,
                     hintText: 'Password',
                     validation: (val) {},
-                    obscureText: authCubit.isShown,
+                    obscureText: authCubit.isSecurePass,
                     suffixIcon: IconButton(
                       onPressed: () {
                         authCubit.showPassword();
                       },
                       icon: Icon(
-                        authCubit.isShown == false
+                        authCubit.isSecurePass == false
                             ? Icons.visibility_off
                             : Icons.visibility,
                       ),

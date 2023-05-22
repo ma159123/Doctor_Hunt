@@ -22,9 +22,9 @@ class SearchDoctorsRepository {
           });
       final data = jsonDecode(response.body);
       return Right(DoctorsModel.fromJson(data));
-    } on ServerException {
+    } catch (e) {
       print('get doctors(repo) error:mmmmm}');
-      return Left(ServerFailure());
+      return Left(Failure(e.toString()));
     }
     // }
     // else{

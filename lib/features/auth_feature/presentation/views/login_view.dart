@@ -58,6 +58,7 @@ class _LoginViewState extends State<LoginView> {
                 context: context,
                 msg: state.userModel.message!,
                 backgroundColor: ColorManager.green);
+           AuthCubit.get(context).updatePatient();
             GoRouter.of(context).push(AppRoutes.layoutViewRoute);
           }
         },
@@ -130,13 +131,13 @@ class _LoginViewState extends State<LoginView> {
                       textEditingController: passController,
                       hintText: 'Password',
                       validation: (val) {},
-                      obscureText: authCubit.isShown,
+                      obscureText: authCubit.isSecurePass,
                       suffixIcon: IconButton(
                         onPressed: () {
                           authCubit.showPassword();
                         },
                         icon: Icon(
-                          authCubit.isShown == false
+                          authCubit.isSecurePass == false
                               ? Icons.visibility_off
                               : Icons.visibility,
                         ),

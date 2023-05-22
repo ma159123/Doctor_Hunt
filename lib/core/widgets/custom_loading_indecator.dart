@@ -1,3 +1,4 @@
+import 'package:doctor_hunt/core/utils/color_manager.dart';
 import 'package:flutter/material.dart';
 
 class CustomLoadingIndicator extends StatelessWidget {
@@ -5,8 +6,8 @@ class CustomLoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(),
+    return  Center(
+      child: CircularProgressIndicator(color: ColorManager.green,),
     );
   }
 }

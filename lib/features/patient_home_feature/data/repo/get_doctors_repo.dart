@@ -42,9 +42,9 @@ class GetDoctorsRepository {
       final data = jsonDecode(response.body);
       //print('get doctors success: ${data.toString()}');
       return Right(DoctorsModel.fromJson(data));
-    } on ServerException {
+    } catch (e) {
       print('get doctors(repo) error:mmmmm}');
-      return Left(ServerFailure());
+      return Left(Failure(e.toString()));
     }
     // }
     // else{
@@ -64,9 +64,9 @@ class GetDoctorsRepository {
       final data = jsonDecode(response.body);
       //print('get doctors success: ${data.toString()}');
       return Right(DoctorModel.fromJson(data));
-    } on ServerException {
+    } catch (e) {
       print('get doctors(repo) error:mmmmm}');
-      return Left(ServerFailure());
+      return Left(Failure(e.toString()));
     }
     // }
     // else{
@@ -88,9 +88,9 @@ class GetDoctorsRepository {
       final data = jsonDecode(response.body);
       //print('get doctors success: ${data.toString()}');
       return Right(DoctorsModel.fromJson(data));
-    } on ServerException {
+    } catch (e) {
       print('get doctors(repo) error:mmmmm}');
-      return Left(ServerFailure());
+      return Left(Failure(e.toString()));
     }
     // }
     // else{

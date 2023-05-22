@@ -100,8 +100,9 @@ class AuthenticationRepository {
         'email': email,
         'password': password,
         "DateOfBirth": dateOfBirth,
-        "favoriteDoctors": favoriteDoctors.toString(),
+        "favoriteDoctors": favoriteDoctors??[],
         "image": image,
+        "balance":'10000',
       },
     );
     print('response: ${response.body}');

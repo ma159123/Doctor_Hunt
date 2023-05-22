@@ -27,9 +27,9 @@ class AppointmentRepository {
       final data = jsonDecode(response.body);
       print('getPatientAppointments(repo) success:${response.body}}');
       return Right(GetAppointmentsModel.fromJson(data));
-    } on ServerException {
-      print('getPatientAppointments(repo) error:mmmmm}');
-      return Left(ServerFailure());
+    } catch (e) {
+      print('get doctors(repo) error:mmmmm}');
+      return Left(Failure(e.toString()));
     }
     // }
     // else{
@@ -53,9 +53,9 @@ class AppointmentRepository {
       final data = jsonDecode(response.body);
       print('getAvailableAppointmentsForDoctor(repo) success:${response.body}}');
       return Right(AvailableAppointments.fromJson(data));
-    } on ServerException {
-      print('getAvailableAppointmentsForDoctor(repo) error}');
-      return Left(ServerFailure());
+    } catch (e) {
+      print('get doctors(repo) error:mmmmm}');
+      return Left(Failure(e.toString()));
     }
     // }
     // else{
@@ -64,7 +64,7 @@ class AppointmentRepository {
   }
 
   Future<Either<Failure, AppointmentModel>> createAppointment({
-    required DateTime date,
+    required String date,
     required String doctorID,
     required String patientID,
     required String state,
@@ -82,6 +82,7 @@ class AppointmentRepository {
         'online': online,
         'state': state,
         'cost': cost,
+        'balance':'1000',
         'notes': notes,
       }, headers: {
         'Authorization':
@@ -90,9 +91,8 @@ class AppointmentRepository {
       final data = jsonDecode(response.body);
       print('make appointment (repo) success:${response.body}}');
       return Right(AppointmentModel.fromJson(data));
-    } on ServerException {
-      print('get doctors(repo) error:mmmmm}');
-      return Left(ServerFailure());
+    }catch(e){
+      return Left(Failure(e.toString()));
     }
     // }
     // else{

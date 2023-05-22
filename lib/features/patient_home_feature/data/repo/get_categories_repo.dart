@@ -22,9 +22,9 @@ class GetCategoriesRepository {
       final data = jsonDecode(response.body);
       print('get category(repo) success:${response.body}}');
       return Right(CategoriesModel.fromJson(data));
-    } on ServerException {
+    } catch (e) {
       print('get doctors(repo) error:mmmmm}');
-      return Left(ServerFailure());
+      return Left(Failure(e.toString()));
     }
     // }
     // else{

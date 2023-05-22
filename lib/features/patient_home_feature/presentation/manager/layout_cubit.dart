@@ -70,7 +70,7 @@ class LayoutCubit extends Cubit<LayoutState> {
   Future<void> getFavoritesDoctors({required List<dynamic>? ids}) async {
     favoriteDoctorsList = [];
     emit(GetFavoriteDoctorsLoadingState());
-    if (ids.isNotEmpty) {
+    if (ids?.length!=0) {
       for (var id in ids!) {
         await getDoctorsByID(id: id);
         favoriteDoctorsList.add(doctorModel);

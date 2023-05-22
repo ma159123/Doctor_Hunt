@@ -19,9 +19,9 @@ class AuthCubit extends Cubit<AuthStates> {
 
   static AuthCubit get(context) => BlocProvider.of(context);
 
-  bool isShown = false;
+  bool isSecurePass = true;
   void showPassword() {
-    isShown = !isShown;
+    isSecurePass = !isSecurePass;
     emit(ChangePassAppearanceSuccessState());
   }
 
@@ -123,7 +123,7 @@ class AuthCubit extends Cubit<AuthStates> {
                 userModelAsPatient!.result?.dateOfBirth ?? DateTime.now()),
         favoriteDoctors:
             favoriteDoctors ?? userModelAsPatient!.result?.favoriteDoctors,
-        image: image,
+        image: image??userModelAsPatient!.result?.image,
       );
       userModelAsPatient = const UserModelAsPatient();
       userModelAsPatient = authResponse;

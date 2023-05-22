@@ -45,7 +45,7 @@ class _MedicalSpecialtiesListState extends State<MedicalSpecialtiesList> {
         separatorBuilder: (context, index) => SizedBox(
           width: 5.w,
         ),
-        itemCount: widget.categoriesModel.results!.length,
+        itemCount: widget.categoriesModel.results?.length??0,
       ),
     );
   }
