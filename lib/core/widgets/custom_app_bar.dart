@@ -7,14 +7,12 @@ class CustomAppBar extends StatelessWidget {
   CustomAppBar(
       {Key? key,
       required this.title,
-      required this.onTap,
       this.textColor,
       this.bottomColor,
       this.iconColor})
       : super(key: key);
 
   final String title;
-  final void Function()? onTap;
   Color? textColor;
   Color? bottomColor;
   Color? iconColor;
@@ -22,21 +20,23 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        GestureDetector(
-          onTap: onTap,
-          child: Container(
-            height: 5.h,
-            width: 10.w,
-            decoration: BoxDecoration(
-              color: bottomColor ?? Colors.grey.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Center(
-                child: Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: iconColor ?? ColorManager.grey,
-            )),
+        Container(
+          height: 5.h,
+          width: 10.w,
+          decoration: BoxDecoration(
+            color: bottomColor ?? Colors.grey.withOpacity(0.3),
+            borderRadius: BorderRadius.circular(15),
           ),
+          child: Center(
+              child: IconButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: iconColor ?? ColorManager.grey,
+          ),
+              )),
         ),
         SizedBox(
           width: 5.w,

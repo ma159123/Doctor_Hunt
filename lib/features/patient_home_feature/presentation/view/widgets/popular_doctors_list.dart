@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../../core/utils/app_routes.dart';
+import '../../../../../core/utils/routes_manager.dart';
 import '../../../data/models/doctors_model/doctors_model.dart';
 
 class PopularDoctorsList extends StatelessWidget {
@@ -21,9 +22,8 @@ class PopularDoctorsList extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) => GestureDetector(
                 onTap: () {
-                  GoRouter.of(context).push(
-                    AppRoutes.doctorDetailsViewRoute,
-                    extra: doctors.results![index],
+                  Navigator.pushNamed(context,AppRoutes.doctorDetailsViewRoute,
+                    arguments: doctors.results![index],
                   );
                 },
                 child: PopularDoctorsItem(

@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import 'core/local/cache.dart';
+import 'core/utils/routes_manager.dart';
 import 'features/auth_feature/data/repo/authentication_repository.dart';
 import 'features/book_feature/data/repo/appointment_repo.dart';
 import 'features/book_feature/presentation/manager/book_cubit.dart';
@@ -47,14 +48,15 @@ class MyApp extends StatelessWidget {
                 ..getAllCategories(),
             ),
           ],
-          child: MaterialApp.router(
+          child: MaterialApp(
             useInheritedMediaQuery: true,
             debugShowCheckedModeBanner: false,
             title: 'Doctor Hunt',
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            routerConfig: AppRoutes.router,
+            initialRoute: '/',
+            onGenerateRoute: RouteGenerator.getRoute,
           ),
         );
       },

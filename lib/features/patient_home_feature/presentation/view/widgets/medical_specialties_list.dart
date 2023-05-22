@@ -1,4 +1,3 @@
-
 import 'package:doctor_hunt/core/utils/color_manager.dart';
 import 'package:doctor_hunt/core/utils/text_styles.dart';
 import 'package:doctor_hunt/features/patient_home_feature/data/models/categories_model/categories_model.dart';
@@ -45,7 +44,7 @@ class _MedicalSpecialtiesListState extends State<MedicalSpecialtiesList> {
         separatorBuilder: (context, index) => SizedBox(
           width: 5.w,
         ),
-        itemCount: widget.categoriesModel.results?.length??0,
+        itemCount: widget.categoriesModel.results?.length ?? 0,
       ),
     );
   }

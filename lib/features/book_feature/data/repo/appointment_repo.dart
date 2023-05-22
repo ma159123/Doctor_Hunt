@@ -3,30 +3,28 @@ import 'package:dartz/dartz.dart';
 import 'package:doctor_hunt/core/utils/app_constant.dart';
 import 'package:doctor_hunt/features/book_feature/data/models/apointment_model/apointment_model.dart';
 import 'package:doctor_hunt/features/book_feature/data/models/available_appointments.dart';
-import 'package:doctor_hunt/features/book_feature/data/models/get_appointments_model/get_appointments_model.dart';
+import 'package:doctor_hunt/features/book_feature/data/models/get_patient_appointments/get_patient_appointments.dart';
 import 'package:http/http.dart' as http;
-
-import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failures.dart';
 import '../../../../core/errors/network_info.dart';
 
 class AppointmentRepository {
   late final NetworkInfo networkInfo;
 
-  Future<Either<Failure, GetAppointmentsModel>> getPatientAppointments(
+  Future<Either<Failure, GetPatientAppointments>> getPatientAppointments(
       {required String patientID}) async {
     // if(await networkInfo.isConnected){
     try {
       final response = await http.get(
           Uri.parse(
-              '${AppConstants.BASE_URL}/api/appointment?patient=$patientID'),
+              '${AppConstants.BASE_URL}/api/appointment?patient=$patientID&populate=doctor'),
           headers: {
             'Authorization':
                 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjQ2MTQxZGM0MWY5NjJlMDYzYWQ1NWUwIiwiaWF0IjoxNjg0MDk1NDUyLCJleHAiOjE3MTU2MzE0NTJ9.uj2wAgKCFabJf-GRWOLF4ZtZ1xtZ4XtP9LGpciA6uvQ'
           });
       final data = jsonDecode(response.body);
       print('getPatientAppointments(repo) success:${response.body}}');
-      return Right(GetAppointmentsModel.fromJson(data));
+      return Right(GetPatientAppointments.fromJson(data));
     } catch (e) {
       print('get doctors(repo) error:mmmmm}');
       return Left(Failure(e.toString()));
@@ -37,9 +35,8 @@ class AppointmentRepository {
     // }
   }
 
-
-  Future<Either<Failure, AvailableAppointments>> getAvailableAppointmentsForDoctor(
-      {required String doctorID}) async {
+  Future<Either<Failure, AvailableAppointments>>
+      getAvailableAppointmentsForDoctor({required String doctorID}) async {
     print(doctorID);
     // if(await networkInfo.isConnected){
     try {
@@ -48,10 +45,11 @@ class AppointmentRepository {
               '${AppConstants.BASE_URL}/api/doctor-appointments/$doctorID'),
           headers: {
             'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjQ2MTQxZGM0MWY5NjJlMDYzYWQ1NWUwIiwiaWF0IjoxNjg0MDk1NDUyLCJleHAiOjE3MTU2MzE0NTJ9.uj2wAgKCFabJf-GRWOLF4ZtZ1xtZ4XtP9LGpciA6uvQ'
+                'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjQ2MTQxZGM0MWY5NjJlMDYzYWQ1NWUwIiwiaWF0IjoxNjg0MDk1NDUyLCJleHAiOjE3MTU2MzE0NTJ9.uj2wAgKCFabJf-GRWOLF4ZtZ1xtZ4XtP9LGpciA6uvQ'
           });
       final data = jsonDecode(response.body);
-      print('getAvailableAppointmentsForDoctor(repo) success:${response.body}}');
+      print(
+          'getAvailableAppointmentsForDoctor(repo) success:${response.body}}');
       return Right(AvailableAppointments.fromJson(data));
     } catch (e) {
       print('get doctors(repo) error:mmmmm}');
@@ -82,7 +80,7 @@ class AppointmentRepository {
         'online': online,
         'state': state,
         'cost': cost,
-        'balance':'1000',
+        'balance': '1000',
         'notes': notes,
       }, headers: {
         'Authorization':
@@ -91,7 +89,7 @@ class AppointmentRepository {
       final data = jsonDecode(response.body);
       print('make appointment (repo) success:${response.body}}');
       return Right(AppointmentModel.fromJson(data));
-    }catch(e){
+    } catch (e) {
       return Left(Failure(e.toString()));
     }
     // }

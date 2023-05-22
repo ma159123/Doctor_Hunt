@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/utils/app_routes.dart';
+import '../../../../core/utils/routes_manager.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_button.dart';
 
@@ -36,9 +37,7 @@ class _AddRecordViewState extends State<AddRecordView> {
               padding: const EdgeInsets.all(20.0),
               child: CustomAppBar(
                   title: 'Add Records',
-                  onTap: () {
-                    GoRouter.of(context).pop();
-                  }),
+                 ),
             ),
             SizedBox(
               height: 5.h,
@@ -189,7 +188,7 @@ class _AddRecordViewState extends State<AddRecordView> {
                   CustomButton(
                     width: 70.w,
                     onTap: () {
-                      GoRouter.of(context).push(AppRoutes.allRecordsViewRoute);
+                      Navigator.pushNamed(context,AppRoutes.allRecordsViewRoute);
                     },
                     buttonText: 'Upload record',
                     textColor: Colors.white,

@@ -12,6 +12,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/utils/app_routes.dart';
+import '../../../../core/utils/routes_manager.dart';
 import '../../../../core/utils/text_styles.dart';
 import '../manager/auth_cubit.dart';
 import '../manager/auth_state.dart';
@@ -46,7 +47,7 @@ class _LoginViewState extends State<LoginView> {
                 context: context,
                 msg: state.userModel.message!,
                 backgroundColor: ColorManager.green);
-            GoRouter.of(context).push(AppRoutes.layoutViewRoute);
+            Navigator.pushNamed(context, AppRoutes.layoutViewRoute);
           }
           if (state is SignInPatientErrorState) {
             showSnackBar(
@@ -58,8 +59,8 @@ class _LoginViewState extends State<LoginView> {
                 context: context,
                 msg: state.userModel.message!,
                 backgroundColor: ColorManager.green);
-           AuthCubit.get(context).updatePatient();
-            GoRouter.of(context).push(AppRoutes.layoutViewRoute);
+            AuthCubit.get(context).updatePatient();
+            Navigator.pushNamed(context, AppRoutes.layoutViewRoute);
           }
         },
         builder: (context, state) {
@@ -89,7 +90,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     Text(
                       textAlign: TextAlign.center,
-                      'You can search course, apply course and find scholarship for abroad studies',
+                      'Seamless Access to Your Account',
                       style: TextStyles.titleStyle14
                           .copyWith(color: ColorManager.grey),
                     ),
@@ -230,7 +231,8 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        GoRouter.of(context).push(AppRoutes.registerViewRoute);
+                        Navigator.pushNamed(
+                            context, AppRoutes.registerViewRoute);
                       },
                       child: Text(
                         'Don’t have an account? Join us',

@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../../core/utils/color_manager.dart';
+import '../../../../../core/utils/routes_manager.dart';
 import '../../../../../core/utils/text_styles.dart';
 import 'package:doctor_hunt/features/patient_home_feature/data/models/doctors_model/result.dart';
 
@@ -42,8 +43,8 @@ class DoctorCategoriesItem extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      GoRouter.of(context)
-                          .push(AppRoutes.doctorDetailsViewRoute, extra: doctor);
+                      Navigator.pushNamed(context,AppRoutes.doctorDetailsViewRoute,
+                          arguments: doctor);
                     },
                     child: Container(
                       clipBehavior: Clip.antiAlias,
@@ -91,12 +92,11 @@ class DoctorCategoriesItem extends StatelessWidget {
                               width: 1.w,
                             ),
                             Text(
-                              '(${doctor.rating.toString()} views)',
-                              style: TextStyles.titleStyle14.copyWith(
-                                  color: ColorManager.lightGrey,
+                              '\$${doctor.appointmentCost ?? ''}',
+                              style: TextStyles.titleStyle16.copyWith(
+                                  color: ColorManager.green,
                                   fontWeight: FontWeight.w300),
-                            ),
-
+                            )
                           ],
                         ),
                       ],
@@ -137,12 +137,6 @@ class DoctorCategoriesItem extends StatelessWidget {
                       )),
                 ],
               ),
-              Text(
-                '\$${doctor.appointmentCost}' ,
-                style: TextStyles.titleStyle20.copyWith(
-                    color: ColorManager.green,
-                    fontWeight: FontWeight.w300),
-              )
             ],
           ),
         );

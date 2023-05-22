@@ -1,6 +1,6 @@
 import 'package:doctor_hunt/features/book_feature/data/models/apointment_model/apointment_model.dart';
 import 'package:doctor_hunt/features/book_feature/data/models/available_appointments.dart';
-import 'package:doctor_hunt/features/book_feature/data/models/get_appointments_model/get_appointments_model.dart';
+import 'package:doctor_hunt/features/book_feature/data/models/get_patient_appointments/get_patient_appointments.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import '../../data/repo/appointment_repo.dart';
@@ -46,7 +46,7 @@ class BookCubit extends Cubit<BookState> {
     });
   }
 
-  GetAppointmentsModel getAppointmentsModel = const GetAppointmentsModel();
+  GetPatientAppointments patientAppointments = const GetPatientAppointments();
   Future<void> getPatientAppointments({
     required String patientID,
   }) async {
@@ -58,20 +58,20 @@ class BookCubit extends Cubit<BookState> {
       print(' create appointment error: $failure');
       emit(GetAppointmentsErrorState(failure.error));
     }, (success) {
-      getAppointmentsModel = success;
-      print(' create appointment success: $appointmentModel');
+      patientAppointments = success;
+      print(' create appointment success: $patientAppointments');
       emit(GetAppointmentsSuccessState(success));
     });
   }
 
-  AvailableAppointments availableAppointments= const AvailableAppointments();
+  AvailableAppointments availableAppointments = const AvailableAppointments();
 
   Future<void> getAvailableAppointmentsForDoctor({
     required String doctorID,
   }) async {
     emit(GetAvailableAppointmentsLoadingState());
-    final response = await _appointmentRepository.getAvailableAppointmentsForDoctor(
-        doctorID: doctorID);
+    final response = await _appointmentRepository
+        .getAvailableAppointmentsForDoctor(doctorID: doctorID);
 
     response.fold((failure) {
       print(' get Available appointment error: $failure');

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:doctor_hunt/core/utils/routes_manager.dart';
 import 'package:doctor_hunt/core/utils/text_styles.dart';
 import 'package:doctor_hunt/features/auth_feature/data/models/user_model_as_doctor/user_model.dart';
 import 'package:doctor_hunt/features/auth_feature/data/models/user_model_as_patient/user_model_as_patient.dart';
@@ -19,24 +20,18 @@ class SplashView extends StatefulWidget {
   State<SplashView> createState() => _SplashViewState();
 }
 
-class _SplashViewState extends State<SplashView>
-    with SingleTickerProviderStateMixin {
-  late AnimationController animationController;
-  late Animation<Offset> slideAnimation;
-
+class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     detectInitialPage();
-    // navigateToLogin();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    animationController.dispose();
   }
 
   @override
@@ -59,12 +54,6 @@ class _SplashViewState extends State<SplashView>
       ),
     );
   }
-
-  // void navigateToLogin() {
-  //   Future.delayed(const Duration(seconds: 2)).then((value) {
-  //     GoRouter.of(context).push(AppRoutes.onBoardingViewRoute);
-  //   });
-  // }
 
   Future<void> detectInitialPage() async {
     String widget;
@@ -93,7 +82,7 @@ class _SplashViewState extends State<SplashView>
       print(widget);
     }
     Timer(const Duration(seconds: 2), () {
-      GoRouter.of(context).push(widget);
+      Navigator.pushReplacementNamed(context, widget);
     });
   }
 }

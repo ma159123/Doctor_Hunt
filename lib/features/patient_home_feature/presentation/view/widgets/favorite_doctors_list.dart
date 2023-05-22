@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../core/utils/routes_manager.dart';
 import '../../../data/models/doctor_model/doctor_model.dart';
 import 'favorite_doctors_item.dart';
 
@@ -18,9 +19,8 @@ class FavoriteDoctorsList extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) => GestureDetector(
                 onTap: () {
-                  GoRouter.of(context).push(
-                    AppRoutes.doctorDetailsViewRoute,
-                    extra: doctors[index],
+                  Navigator.pushNamed(context,AppRoutes.doctorDetailsViewRoute,
+                    arguments: doctors[index],
                   );
                 },
                 child: FavoriteDoctorsItem(

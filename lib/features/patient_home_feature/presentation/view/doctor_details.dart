@@ -21,9 +21,7 @@ class DoctorDetailsView extends StatelessWidget {
           children: [
             CustomAppBar(
                 title: 'Doctor Details',
-                onTap: () {
-                  GoRouter.of(context).pop();
-                }),
+                ),
             SizedBox(height: 5.h),
             DoctorInfoWidget(
               doctor: doctor,
@@ -32,56 +30,40 @@ class DoctorDetailsView extends StatelessWidget {
             SizedBox(
               height: 2.h,
             ),
-            const Text(
-              'Available time',
-              style: TextStyles.titleStyle18,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'from ${doctor.workHours?.from} to ${doctor.workHours?.to}',
-                style: TextStyles.titleStyle16.copyWith(
-                    color: ColorManager.grey, fontWeight: FontWeight.normal),
-              ),
-            ),
-            // const Text(
-            //   'Services',
-            //   style: TextStyles.titleStyle18,
-            // ),
-            // Expanded(
-            //   child: ListView.separated(
-            //     itemBuilder: (context, index) {
-            //       return SizedBox(
-            //         height: 4.h,
-            //         child: Row(
-            //           children: [
-            //             Text(
-            //               '$index. ',
-            //               style: TextStyles.titleStyle14.copyWith(
-            //                   fontWeight: FontWeight.bold,
-            //                   color: ColorManager.green),
-            //             ),
-            //             Text(
-            //               'yjyrmryfbxfhtmuusfbghdhjyjyrmryfbxfhtmuu',
-            //               style: TextStyles.titleStyle14.copyWith(
-            //                   fontWeight: FontWeight.w500,
-            //                   color: ColorManager.lightGrey),
-            //               maxLines: 2,
-            //               overflow: TextOverflow.ellipsis,
-            //             ),
-            //           ],
-            //         ),
-            //       );
-            //     },
-            //     separatorBuilder: (context, index) => SizedBox(
-            //       height: 2.h,
-            //     ),
-            //     itemCount: 3,
-            //   ),
-            // ),
+            //buildDoctorInfo(title: 'Available time', value: 'from ${doctor.workHours?.from} to ${doctor.workHours?.to}'),
+            buildDoctorInfo(title: 'Address', value: doctor.address ?? ''),
+            buildDoctorInfo(title: 'Phone', value: doctor.phone ?? ''),
+            buildDoctorInfo(title: 'Email', value: doctor.email ?? ''),
+            buildDoctorInfo(
+                title: 'Experience', value: doctor.experience ?? ''),
+            buildDoctorInfo(
+                title: 'Description', value: doctor.description ?? ''),
           ],
         ),
       ),
     );
   }
+
+  Widget buildDoctorInfo({required String title, required var value}) =>
+      Padding(
+        padding: EdgeInsets.only(bottom: 2.0.h),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '$title: ',
+              style: TextStyles.titleStyle18,
+            ),
+            Flexible(
+              child: Text(
+                '$value',
+                style: TextStyles.titleStyle16.copyWith(
+                    color: ColorManager.grey, fontWeight: FontWeight.normal),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              ),
+            ),
+          ],
+        ),
+      );
 }

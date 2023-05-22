@@ -6,6 +6,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../../../../core/utils/app_routes.dart';
 import '../../../../../core/utils/color_manager.dart';
+import '../../../../../core/utils/routes_manager.dart';
 import '../../../../../core/utils/text_styles.dart';
 import '../../../../../core/widgets/circle_widget.dart';
 
@@ -153,7 +154,7 @@ class SearchDoctorsItem extends StatelessWidget {
               ),
               CustomButton(
                 onTap: () {
-                  GoRouter.of(context).push(AppRoutes.bookDetailsViewRoute,extra: doctorItem);
+                  Navigator.pushNamed(context,AppRoutes.bookDetailsViewRoute, arguments: doctorItem);
                 },
                 buttonText: 'Book Now',
                 textColor: ColorManager.white,

@@ -1,6 +1,6 @@
 import 'package:doctor_hunt/features/book_feature/data/models/apointment_model/apointment_model.dart';
 import 'package:doctor_hunt/features/book_feature/data/models/available_appointments.dart';
-import 'package:doctor_hunt/features/book_feature/data/models/get_appointments_model/get_appointments_model.dart';
+import 'package:doctor_hunt/features/book_feature/data/models/get_patient_appointments/get_patient_appointments.dart';
 
 abstract class BookState {}
 
@@ -21,15 +21,14 @@ class CreateAppointmentErrorState extends BookState {
 class GetAppointmentsLoadingState extends BookState {}
 
 class GetAppointmentsSuccessState extends BookState {
-  GetAppointmentsModel getAppointmentsModel;
-  GetAppointmentsSuccessState(this.getAppointmentsModel);
+  GetPatientAppointments getPatientAppointments;
+  GetAppointmentsSuccessState(this.getPatientAppointments);
 }
 
 class GetAppointmentsErrorState extends BookState {
   String error;
   GetAppointmentsErrorState(this.error);
 }
-
 
 class GetAvailableAppointmentsLoadingState extends BookState {}
 

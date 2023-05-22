@@ -1,9 +1,11 @@
 import 'package:equatable/equatable.dart';
 
+import 'doctor.dart';
+
 class Result extends Equatable {
   final String? id;
   final DateTime? date;
-  final String? doctor;
+  final Doctor? doctor;
   final String? patient;
   final bool? online;
   final String? state;
@@ -30,7 +32,9 @@ class Result extends Equatable {
         date: json['date'] == null
             ? null
             : DateTime.parse(json['date'] as String),
-        doctor: json['doctor'] as String?,
+        doctor: json['doctor'] == null
+            ? null
+            : Doctor.fromJson(json['doctor'] as Map<String, dynamic>),
         patient: json['patient'] as String?,
         online: json['online'] as bool?,
         state: json['state'] as String?,
@@ -47,7 +51,7 @@ class Result extends Equatable {
   Map<String, dynamic> toJson() => {
         '_id': id,
         'date': date?.toIso8601String(),
-        'doctor': doctor,
+        'doctor': doctor?.toJson(),
         'patient': patient,
         'online': online,
         'state': state,

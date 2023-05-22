@@ -42,7 +42,7 @@ class _FavoriteViewState extends State<FavoriteView> {
                   style: TextStyles.titleStyle18,
                 ),
               ),
-              SizedBox(height: 5.h),
+              SizedBox(height: 1.h),
               Expanded(
                 child: state is GetFavoriteDoctorsLoadingState
                     ? Center(

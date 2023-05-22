@@ -2,14 +2,14 @@ import 'package:equatable/equatable.dart';
 
 import 'result.dart';
 
-class GetAppointmentsModel extends Equatable {
+class GetPatientAppointments extends Equatable {
   final String? message;
   final bool? success;
   final List<Result>? results;
   final int? total;
   final bool? notify;
 
-  const GetAppointmentsModel({
+  const GetPatientAppointments({
     this.message,
     this.success,
     this.results,
@@ -17,8 +17,8 @@ class GetAppointmentsModel extends Equatable {
     this.notify,
   });
 
-  factory GetAppointmentsModel.fromJson(Map<String, dynamic> json) {
-    return GetAppointmentsModel(
+  factory GetPatientAppointments.fromJson(Map<String, dynamic> json) {
+    return GetPatientAppointments(
       message: json['message'] as String?,
       success: json['success'] as bool?,
       results: (json['results'] as List<dynamic>?)

@@ -123,10 +123,11 @@ class AuthCubit extends Cubit<AuthStates> {
                 userModelAsPatient!.result?.dateOfBirth ?? DateTime.now()),
         favoriteDoctors:
             favoriteDoctors ?? userModelAsPatient!.result?.favoriteDoctors,
-        image: image??userModelAsPatient!.result?.image,
+        image: image ?? userModelAsPatient!.result?.image,
       );
       userModelAsPatient = const UserModelAsPatient();
       userModelAsPatient = authResponse;
+      CacheHelper.removeData(key: 'patient');
       CacheHelper.saveData(
         key: 'patient',
         value: jsonEncode(userModelAsPatient),

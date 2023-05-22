@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 import '../../core/utils/app_routes.dart';
+import '../../core/utils/routes_manager.dart';
 import '../../core/widgets/custom_button.dart';
 import 'model/on_boarding_model.dart';
 
@@ -82,7 +83,8 @@ class _OnBoardingViewState extends State<OnBoardingView> {
           CustomButton(
             onTap: () {
               if (currentIndex == modeList.length - 1) {
-                GoRouter.of(context).pushReplacement(AppRoutes.loginViewRoute);
+                Navigator.pushReplacementNamed(context, AppRoutes.loginViewRoute);
+               // GoRouter.of(context).pushReplacement(AppRoutes.loginViewRoute);
               }
               _controller.nextPage(
                 duration: const Duration(milliseconds: 100),
@@ -95,7 +97,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
           ),
           GestureDetector(
             onTap: () {
-              GoRouter.of(context).pushReplacement(AppRoutes.loginViewRoute);
+              Navigator.pushReplacementNamed(context,AppRoutes.loginViewRoute);
             },
             child: Container(
               margin: EdgeInsets.only(bottom: 7.h, top: 2.h),

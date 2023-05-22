@@ -1,10 +1,31 @@
 import 'package:doctor_hunt/core/utils/color_manager.dart';
 import 'package:doctor_hunt/core/utils/text_styles.dart';
+import 'package:doctor_hunt/features/book_feature/data/models/get_patient_appointments/result.dart';
+import 'package:doctor_hunt/features/patient_home_feature/presentation/manager/layout_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
-class RecordWidget extends StatelessWidget {
-  const RecordWidget({Key? key}) : super(key: key);
+class RecordWidget extends StatefulWidget {
+  const RecordWidget({Key? key, required this.appointment, required this.index})
+      : super(key: key);
+
+  final Result? appointment;
+  final int index;
+
+  @override
+  State<RecordWidget> createState() => _RecordWidgetState();
+}
+
+class _RecordWidgetState extends State<RecordWidget> {
+  var formattedDate = '1 FEB';
+  List<String> doctorsIds = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    formattedDate = formatDate(widget.appointment?.date.toString() ?? '');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +58,7 @@ class RecordWidget extends StatelessWidget {
                 ),
                 child: Center(
                     child: Text(
-                  '27\n FEB',
+                  '$formattedDate',
                   style: TextStyles.titleStyle18
                       .copyWith(color: ColorManager.white),
                   textAlign: TextAlign.center,
@@ -55,7 +76,7 @@ class RecordWidget extends StatelessWidget {
                 ),
                 child: Center(
                     child: Text(
-                  'NEW',
+                  '${widget.appointment?.state}',
                   style: TextStyles.titleStyle16
                       .copyWith(color: ColorManager.green),
                   textAlign: TextAlign.center,
@@ -75,7 +96,8 @@ class RecordWidget extends StatelessWidget {
               SizedBox(
                 height: 1.5.h,
               ),
-              Text('Record for Abdullah mamun',
+              Text(
+                  'Record for ${widget.appointment?.doctor?.name}',
                   style: TextStyles.titleStyle14
                       .copyWith(color: ColorManager.green)),
               SizedBox(
@@ -86,14 +108,20 @@ class RecordWidget extends StatelessWidget {
                       .copyWith(color: ColorManager.lightGrey)),
             ],
           ),
-          SizedBox(
-            width: 3.w,
-          ),
-          Align(
-              alignment: Alignment.topRight,
-              child: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)))
+          // SizedBox(
+          //   width: 3.w,
+          // ),
+          // Align(
+          //     alignment: Alignment.topRight,
+          //     child: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)))
         ],
       ),
     );
+  }
+
+  String formatDate(String datetimeString) {
+    final parsedDateTime = DateTime.parse(datetimeString);
+    final formatter = DateFormat('dd MMM');
+    return formatter.format(parsedDateTime);
   }
 }

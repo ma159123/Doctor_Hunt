@@ -6,7 +6,7 @@ import '../../data/models/doctors_model/doctors_model.dart';
 import '../../data/repo/get_categories_repo.dart';
 import '../../data/repo/get_doctors_repo.dart';
 import '../../data/repo/search_doctors_repo.dart';
-import '../view/chat_view.dart';
+import '../view/appointments_view.dart';
 import '../view/favorite_view.dart';
 import '../view/home_view.dart';
 import 'layout_state.dart';
@@ -29,7 +29,7 @@ class LayoutCubit extends Cubit<LayoutState> {
   List<Widget> views = const [
     HomeView(),
     FavoriteView(),
-    ChatView(),
+    AppointmentsView(),
   ];
   int index = 0;
   void changeBottomNavBar(int index) {
@@ -70,7 +70,7 @@ class LayoutCubit extends Cubit<LayoutState> {
   Future<void> getFavoritesDoctors({required List<dynamic>? ids}) async {
     favoriteDoctorsList = [];
     emit(GetFavoriteDoctorsLoadingState());
-    if (ids?.length!=0) {
+    if (ids?.length != 0) {
       for (var id in ids!) {
         await getDoctorsByID(id: id);
         favoriteDoctorsList.add(doctorModel);
@@ -79,6 +79,7 @@ class LayoutCubit extends Cubit<LayoutState> {
     emit(GetFavoriteDoctorsSuccessState());
     print("favoriteDoctorsList:$favoriteDoctorsList");
   }
+
 
   DoctorsModel specificDoctorsModel = const DoctorsModel();
 

@@ -9,7 +9,7 @@ void showSnackBar(
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       behavior: SnackBarBehavior.floating,
-      margin:EdgeInsets.all(8.0),
+      margin: EdgeInsets.all(8.0),
       content: Text(
         msg,
         style: TextStyle(color: ColorManager.white),

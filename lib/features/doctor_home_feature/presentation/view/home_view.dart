@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../core/utils/routes_manager.dart';
 import '../../../patient_home_feature/presentation/manager/layout_cubit.dart';
 
 class DoctorHomeView extends StatelessWidget {
@@ -76,9 +77,8 @@ class DoctorHomeView extends StatelessWidget {
                                 child: GestureDetector(
                                   onTap: () {
                                     print(layoutCubit.doctorsModel.message);
-                                    GoRouter.of(context).push(
-                                        AppRoutes.profileViewRoute,
-                                        extra: authCubit.userModelAsDoctor);
+                                    Navigator.pushNamed(context,AppRoutes.profileViewRoute,
+                                        arguments: authCubit.userModelAsDoctor);
                                   },
                                   child: CircleAvatar(
                                     radius: 30,

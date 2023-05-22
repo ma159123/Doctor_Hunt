@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../../core/utils/color_manager.dart';
+import '../../../../../core/utils/routes_manager.dart';
 import '../../../../../core/utils/text_styles.dart';
 import '../../../../auth_feature/presentation/manager/auth_cubit.dart';
 import '../../manager/layout_cubit.dart';
@@ -149,7 +150,7 @@ class DoctorInfoWidget extends StatelessWidget {
               ),
               CustomButton(
                 onTap: () {
-                  GoRouter.of(context).push(AppRoutes.bookDetailsViewRoute,extra: doctor);
+                  Navigator.pushNamed(context,AppRoutes.bookDetailsViewRoute, arguments: doctor);
                 },
                 buttonText: 'Book',
                 textColor: ColorManager.white,

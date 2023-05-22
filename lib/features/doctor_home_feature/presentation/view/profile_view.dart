@@ -66,9 +66,7 @@ class _DoctorProfileViewState extends State<DoctorProfileView> {
                       children: [
                         CustomAppBar(
                           title: 'Profile',
-                          onTap: () {
-                            GoRouter.of(context).pop();
-                          },
+
                           textColor: ColorManager.white,
                           bottomColor: ColorManager.white,
                           iconColor: Colors.black,

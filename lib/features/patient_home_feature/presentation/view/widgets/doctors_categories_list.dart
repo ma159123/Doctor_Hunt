@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../core/utils/routes_manager.dart';
+
 class DoctorCategoriesList extends StatelessWidget {
   const DoctorCategoriesList(
       {Key? key, required this.isScrolled, required this.doctor})
@@ -13,6 +15,7 @@ class DoctorCategoriesList extends StatelessWidget {
   final bool isScrolled;
   @override
   Widget build(BuildContext context) {
+    print(doctor.results?.length);
     return SizedBox(
       height: 18.h,
       child: ListView.separated(
@@ -21,9 +24,8 @@ class DoctorCategoriesList extends StatelessWidget {
               : const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) => GestureDetector(
                 onTap: () {
-                  GoRouter.of(context).push(
-                    AppRoutes.doctorDetailsViewRoute,
-                    extra: doctor.results![index],
+                  Navigator.pushNamed(context,AppRoutes.doctorDetailsViewRoute,
+                    arguments: doctor.results![index],
                   );
                 },
                 child: DoctorCategoriesItem(

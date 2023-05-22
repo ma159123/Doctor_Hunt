@@ -52,15 +52,14 @@ class _SlotListState extends State<SlotList> {
                           time: widget.slots[index],
                           onTap: () {
                             setState(() {
-                              if(selectedItem==index){
-                                selectedItem=-1;
+                              if (selectedItem == index) {
+                                selectedItem = -1;
                                 widget.selectedTime('');
-                              }else{
+                              } else {
                                 selectedItem = index;
                                 widget.selectedTime(widget.slots[index]);
                               }
                             });
-
                           },
                           backgroundColor: selectedItem == index
                               ? ColorManager.green

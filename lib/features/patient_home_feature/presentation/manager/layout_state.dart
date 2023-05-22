@@ -74,3 +74,7 @@ class GetAllCategoriesErrorState extends LayoutState {
 class GetFavoriteDoctorsLoadingState extends LayoutState {}
 
 class GetFavoriteDoctorsSuccessState extends LayoutState {}
+
+class GetAppointmentsDoctorsLoadingState extends LayoutState {}
+
+class GetAppointmentsDoctorsSuccessState extends LayoutState {}

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 import 'package:intl/intl.dart';
+import '../../../../core/utils/routes_manager.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../book_feature/presentation/view/widgets/add_record_text_field.dart';
@@ -70,9 +71,6 @@ class _PatientProfileViewState extends State<PatientProfileView> {
                       children: [
                         CustomAppBar(
                           title: 'Profile',
-                          onTap: () {
-                            GoRouter.of(context).pop();
-                          },
                           textColor: ColorManager.white,
                           bottomColor: ColorManager.white,
                           iconColor: Colors.black,
@@ -105,19 +103,7 @@ class _PatientProfileViewState extends State<PatientProfileView> {
                                           ),
                                           onPressed: () {
                                             authCubit.signOut(context);
-                                            context.pushReplacement(
-                                                AppRoutes.loginViewRoute);
-                                            // GoRouter.neglect(context, () {
-                                            //   context
-                                            //       .goNamed(AppRoutes.loginViewRoute);
-                                            // });
-                                            // Navigator.pushAndRemoveUntil(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) =>
-                                            //             const LoginView()),
-                                            //     (Route<dynamic> route) =>
-                                            //         false);
+                                            Navigator.pushNamedAndRemoveUntil(context, AppRoutes.loginViewRoute, (route) => false);
                                           },
                                         )
                                       ],
@@ -197,12 +183,6 @@ class _PatientProfileViewState extends State<PatientProfileView> {
                 title: 'Date of birth',
                 controller: dateController..text,
               ),
-              // AddRecordTextField(
-              //   hintText: 'Add Details',
-              //   suffixIcon: const Icon(Icons.edit),
-              //   title: 'Location',
-              //   controller: locationController,
-              // ),
               SizedBox(
                 height: 5.h,
               ),
@@ -210,7 +190,8 @@ class _PatientProfileViewState extends State<PatientProfileView> {
                 width: 70.w,
                 onTap: () {
                   print('selected image:$_selectedImagePath');
-                  print('${authCubit.userModelAsPatient!.result!.favoriteDoctors.toString()}');
+                  print(
+                      authCubit.userModelAsPatient!.result!.favoriteDoctors);
                   authCubit.updatePatient(
                       userId: authCubit.userModelAsPatient!.result!.id!,
                       name: nameController.text,

@@ -12,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../core/utils/routes_manager.dart';
 import '../manager/layout_cubit.dart';
 
 class HomeView extends StatelessWidget {
@@ -77,9 +78,8 @@ class HomeView extends StatelessWidget {
                                 child: GestureDetector(
                                   onTap: () {
                                     print(layoutCubit.doctorsModel.message);
-                                    GoRouter.of(context).push(
-                                        AppRoutes.profileViewRoute,
-                                        extra: authCubit.userModelAsPatient);
+                                    Navigator.pushNamed(context,AppRoutes.profileViewRoute,
+                                        arguments: authCubit.userModelAsPatient);
                                   },
                                   child: CircleAvatar(
                                     radius: 30,
@@ -108,8 +108,7 @@ class HomeView extends StatelessWidget {
                               validation: (val) {},
                               onTap: () {
                                 print('object');
-                                GoRouter.of(context)
-                                    .push(AppRoutes.searchViewRoute);
+                                Navigator.pushNamed(context,AppRoutes.searchViewRoute);
                               },
                               isReadOnly: true,
                               onSearch: () {},
@@ -139,8 +138,7 @@ class HomeView extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              GoRouter.of(context)
-                                  .push(AppRoutes.popularDoctorsViewRoute);
+                              Navigator.pushNamed(context,AppRoutes.popularDoctorsViewRoute);
                             },
                             child: Row(
                               children: [

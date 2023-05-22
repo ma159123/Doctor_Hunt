@@ -33,9 +33,6 @@ class SpecializationView extends StatelessWidget {
                 children: [
                   CustomAppBar(
                     title: specialization,
-                    onTap: () {
-                      GoRouter.of(context).pop();
-                    },
                   ),
                   // SizedBox(
                   //   height: 3.h,

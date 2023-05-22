@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../../core/utils/color_manager.dart';
+import '../../../../../core/utils/routes_manager.dart';
 import '../../../../../core/utils/text_styles.dart';
 import 'package:doctor_hunt/features/patient_home_feature/data/models/doctor_model/result.dart';
 
@@ -37,8 +38,7 @@ class FavoriteDoctorsItem extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              GoRouter.of(context)
-                  .push(AppRoutes.doctorDetailsViewRoute, extra: doctor);
+              Navigator.pushNamed(context,AppRoutes.doctorDetailsViewRoute, arguments: doctor);
             },
             child: Container(
               clipBehavior: Clip.antiAlias,

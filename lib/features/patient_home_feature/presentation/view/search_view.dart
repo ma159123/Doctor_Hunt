@@ -27,9 +27,7 @@ class SearchView extends StatelessWidget {
                 children: [
                   CustomAppBar(
                     title: 'Find Doctors',
-                    onTap: () {
-                      GoRouter.of(context).pop();
-                    },
+
                   ),
                   SizedBox(
                     height: 3.h,

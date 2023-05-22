@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/utils/app_routes.dart';
+import '../../../../core/utils/routes_manager.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_button.dart';
 
@@ -23,9 +24,7 @@ class MedicalRecordsView extends StatelessWidget {
             children: [
               CustomAppBar(
                   title: 'Medical Records',
-                  onTap: () {
-                    GoRouter.of(context).pop();
-                  }),
+                 ),
               SizedBox(
                 height: 12.h,
               ),
@@ -62,7 +61,7 @@ class MedicalRecordsView extends StatelessWidget {
               CustomButton(
                 width: 70.w,
                 onTap: () {
-                  GoRouter.of(context).push(AppRoutes.addRecordViewRoute);
+                  Navigator.pushNamed(context,AppRoutes.addRecordViewRoute);
                 },
                 buttonText: 'Add a record',
                 textColor: Colors.white,

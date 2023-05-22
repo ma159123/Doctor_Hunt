@@ -35,7 +35,6 @@ class _BookViewState extends State<BookView> {
     super.initState();
     BookCubit.get(context)
         .getAvailableAppointmentsForDoctor(doctorID: widget.doctor.id!);
-
   }
 
   @override
@@ -73,9 +72,7 @@ class _BookViewState extends State<BookView> {
                 children: [
                   CustomAppBar(
                       title: 'Select Time',
-                      onTap: () {
-                        GoRouter.of(context).pop();
-                      }),
+                   ),
                   SizedBox(
                     height: 2.h,
                   ),

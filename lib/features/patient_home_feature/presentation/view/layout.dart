@@ -32,7 +32,8 @@ class LayoutView extends StatelessWidget {
                 BottomNavigationBarItem(
                     icon: Icon(Icons.favorite), label: 'Saved'),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.chat), label: 'Messages'),
+                    icon: Icon(Icons.my_library_books_rounded),
+                    label: 'Appointments'),
               ],
             ),
           ),

@@ -10,6 +10,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/utils/app_routes.dart';
+import '../../../../core/utils/routes_manager.dart';
 import '../../../../core/utils/text_styles.dart';
 import '../../../../core/widgets/custom_snackbar.dart';
 import '../manager/auth_cubit.dart';
@@ -51,7 +52,7 @@ class _RegisterViewState extends State<RegisterView> {
               context: context,
               msg: state.userModel.message!,
               backgroundColor: ColorManager.green);
-          GoRouter.of(context).push(AppRoutes.loginViewRoute);
+          Navigator.pushNamed(context,AppRoutes.loginViewRoute);
         }
         if (state is SignUpPatientErrorState) {
           showSnackBar(
@@ -63,7 +64,7 @@ class _RegisterViewState extends State<RegisterView> {
               context: context,
               msg: state.userModel.message!,
               backgroundColor: ColorManager.green);
-          GoRouter.of(context).push(AppRoutes.loginViewRoute);
+          Navigator.pushNamed(context,AppRoutes.loginViewRoute);
         }
       }, builder: (context, state) {
         var authCubit = AuthCubit.get(context);
@@ -83,7 +84,7 @@ class _RegisterViewState extends State<RegisterView> {
               child: Column(
                 children: [
                   Text(
-                    'Join us to start searching',
+                    'Join now and start booking',
                     style:
                         TextStyles.titleStyle25.copyWith(fontFamily: 'Rubik'),
                   ),
@@ -92,7 +93,7 @@ class _RegisterViewState extends State<RegisterView> {
                   ),
                   Text(
                     textAlign: TextAlign.center,
-                    'You can search course, apply course and find scholarship for abroad studies',
+                    'You can easily book appointments with your preferred doctors',
                     style: TextStyles.titleStyle14.copyWith(
                         fontFamily: 'Rubik', color: ColorManager.grey),
                   ),
@@ -232,7 +233,7 @@ class _RegisterViewState extends State<RegisterView> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      GoRouter.of(context).push(AppRoutes.loginViewRoute);
+                      Navigator.pushNamed(context,AppRoutes.loginViewRoute);
                     },
                     child: Text(
                       'Have an account? Log in',

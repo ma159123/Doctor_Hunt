@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
- class Failure extends Equatable {
+class Failure extends Equatable {
   final String error;
 
   Failure(this.error);
@@ -26,7 +26,6 @@ class ServerFailure extends Failure {
 
 class EmptyCacheFailure extends Failure {
   EmptyCacheFailure(super.error);
-
 
   @override
   List<Object?> get props => [];
